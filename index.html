@@ -15,8 +15,8 @@
     --border: #232932;
     --text: #f0f2f5;
     --muted: #8692a3;
-    --accent: #4ade80;       /* hecho - verde vibrante moderno */
-    --accent-amber: #f59e0b; /* pendiente con fecha - ámbar cálido */
+    --accent: #4ade80;       /* hecho - verde vibrante */
+    --accent-amber: #f59e0b; /* pendiente con fecha - ámbar */
     --accent-gray: #64748b;  /* sin fecha */
     --danger: #ef4444;
     --radius: 12px;
@@ -42,7 +42,7 @@
 
   *{
     box-sizing: border-box;
-    transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
   }
   
   body{
@@ -64,7 +64,7 @@
     gap: 16px;
     margin-bottom: 8px;
     flex-wrap: wrap;
-    padding-right: 60px; /* Espacio para el botón de tema */
+    padding-right: 60px;
   }
   
   h1{
@@ -111,12 +111,13 @@
     justify-content: center;
     font-size: 18px;
     box-shadow: 0 4px 12px var(--shadow);
+    z-index: 10;
   }
   .theme-toggle:hover {
     border-color: var(--muted);
   }
 
-  /* Formulario Mejorado */
+  /* Formulario Estilizado */
   .add-form{
     display: flex;
     gap: 10px;
@@ -172,7 +173,7 @@
     background: var(--text);
   }
 
-  /* Layout principal */
+  /* Layout de la App */
   .grid{
     display: grid;
     grid-template-columns: 1.6fr 1fr;
@@ -197,7 +198,7 @@
     font-weight: 600;
   }
 
-  /* Lista de Planes */
+  /* Lista de Tarjetas */
   .group-label{
     font-size: 11px;
     color: var(--muted);
@@ -295,7 +296,7 @@
   }
   .error{ color: var(--danger); }
 
-  /* Calendario */
+  /* Módulo Calendario */
   .cal-nav{
     display: flex;
     align-items: center;
@@ -364,7 +365,7 @@
   }
   .filter-chip:hover { border-color: var(--muted); }
 
-  /* Nombre de usuario e Identificación */
+  /* Identificación */
   .who-bar{ margin-bottom: 20px; }
   .who-bar input{
     background: var(--surface);
@@ -381,7 +382,7 @@
   }
   .who-bar input:focus { border-color: var(--muted); }
   
-  /* Bloque Votaciones / RSVP */
+  /* Bloque RSVP */
   .rsvp-row{
     display: flex;
     align-items: center;
@@ -451,7 +452,7 @@ let selectedDate = null;
 const DOW = ['L','M','X','J','V','S','D'];
 const MONTHS = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
 
-// --- Lógica de Cambio de Tema (Persistente) ---
+// --- Inicialización y Guardado Persistente del Tema ---
 const themeBtn = document.getElementById('theme-btn');
 const currentTheme = localStorage.getItem('theme') || 'dark';
 document.documentElement.setAttribute('data-theme', currentTheme);
@@ -472,23 +473,24 @@ function sbHeaders(extra={}){
   };
 }
 
+// SOLUCIÓN TOTAL: Si falla la relación o tabla externa, se bifurca inmediatamente sin lanzar excepciones catastróficas
 async function loadData(){
   try{
     const res = await fetch(`${SUPABASE_URL}/rest/v1/${TABLE}?select=*,asistencia(name,status)&order=created_at.asc`, {
       headers: sbHeaders()
     });
-    if(!res.ok) throw new Error('fetch failed: ' + res.status);
+    if(!res.ok) throw new Error('Primary query failed status: ' + res.status);
     plans = await res.json();
   }catch(e){
-    console.warn('Ejecutando fallback sin cruzar con tabla asistencia...', e);
+    console.warn('Falló la consulta relacional con la tabla asistencia, aplicando fallback seguro inmediato:', e);
     try {
       const resFallback = await fetch(`${SUPABASE_URL}/rest/v1/${TABLE}?select=*&order=created_at.asc`, {
         headers: sbHeaders()
       });
-      if(!resFallback.ok) throw new Error('fallback failed');
+      if(!resFallback.ok) throw new Error('Fallback endpoint unreachable');
       plans = await resFallback.json();
     } catch(err) {
-      document.getElementById('content').innerHTML = `<div class="error">No se pudo conectar con Supabase. Comprueba las políticas RLS.</div>`;
+      document.getElementById('content').innerHTML = `<div class="error">Error crítico: No se ha podido obtener conexión con las tablas de Supabase.</div>`;
       return;
     }
   }
@@ -694,7 +696,4 @@ async function deletePlan(id){
   plans = plans.filter(x => x.id !== id);
   renderAll();
   try{
-    await fetch(`${SUPABASE_URL}/rest/v1/${TABLE}?id=eq.${id}`, {
-      method: 'DELETE',
-      headers: sbHeaders({'Prefer':'return=minimal'})
-    
+ 
