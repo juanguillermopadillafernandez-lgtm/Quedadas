@@ -14,11 +14,12 @@
     --border: #262b33;
     --text: #e6e8eb;
     --muted: #8b939f;
-    --accent: #5fd0c5;      /* hecho */
+    --accent: #ffb454;      /* color unificado ámbar para destacar elementos principales */
+    --accent-teal: #5fd0c5; /* hecho */
     --accent-amber: #ffb454; /* pendiente con fecha */
     --accent-gray: #5b6472;  /* sin fecha */
     --danger: #e8645a;
-    --radius: 12px;
+    --radius: 10px;
     --transition: all 0.2s ease;
   }
   *{box-sizing:border-box;}
@@ -42,39 +43,39 @@
   }
   h1{
     font-family:'IBM Plex Mono',monospace;
-    font-size:22px;
+    font-size:20px;
     font-weight:600;
     letter-spacing:-0.2px;
     margin:0;
   }
-  h1 .dot{color:var(--accent-amber);}
+  h1 .dot{color:var(--accent);}
   .sub{
     color:var(--muted);
     font-size:13px;
-    margin:4px 0 20px;
+    margin:4px 0 22px;
   }
   .notice{
     font-size:12px;
     color:var(--muted);
-    border:1px dashed var(--border);
+    border:1px solid var(--border);
     border-radius:var(--radius);
     padding:10px 12px;
-    margin-bottom:20px;
+    margin-bottom:22px;
     background:var(--surface);
   }
 
-  /* Guía de uso intuitiva para usuarios nuevos */
+  /* Guía de uso interactiva para mitigar dudas de usuarios nuevos */
   .guide-box {
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: var(--radius);
     padding: 14px;
-    margin-bottom: 20px;
+    margin-bottom: 22px;
     font-size: 13px;
   }
   .guide-box summary {
     font-family: 'IBM Plex Mono', monospace;
-    color: var(--accent-amber);
+    color: var(--accent);
     font-weight: 600;
     cursor: pointer;
   }
@@ -84,10 +85,10 @@
     color: var(--muted);
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 6px;
   }
 
-  /* Formulario de Adición Inteligente y Responsivo */
+  /* Formulario de Adición Adaptivo (Bloque en Móvil, Rejilla en PC) */
   .add-form{
     display: flex;
     flex-direction: column;
@@ -99,7 +100,6 @@
     margin-bottom:24px;
   }
   
-  /* En tablets y ordenadores se organiza en una cuadrícula limpia */
   @media (min-width: 580px) {
     .add-form {
       display: grid;
@@ -136,20 +136,20 @@
     font-family:inherit;
     cursor:pointer;
     font-weight: 600;
-    transition:background .15s, border-color .15s;
+    transition: var(--transition);
     display: inline-flex;
     align-items: center;
     justify-content: center;
   }
-  .btn:hover{border-color:#3a414c; background: var(--surface-2);}
+  .btn:hover{border-color:#3a414c;}
   .btn-primary{
-    background:var(--accent-amber);
-    border-color:var(--accent-amber);
+    background:var(--accent);
+    border-color:var(--accent);
     color:#0d0f12;
   }
-  .btn-primary:hover{background:#fcd34d; transform: translateY(-1px);}
+  .btn-primary:hover{background:#ffca85; transform: translateY(-1px);}
 
-  /* Diseño de Rejilla (1 columna en móvil, 2 en PC) */
+  /* Grid Responsivo principal */
   .grid{
     display:grid;
     grid-template-columns: 1.4fr 1fr;
@@ -174,7 +174,7 @@
     border-bottom: 1px solid var(--border);
   }
 
-  /* Lista de Eventos Estilo Cards */
+  /* Listado de planes optimizado para lecturas rápidas */
   .group-label{
     font-size:11px;
     color:var(--muted);
@@ -188,9 +188,9 @@
   .plan-item{
     display:flex;
     flex-direction: column;
-    gap:10px;
+    gap:12px;
     padding:14px;
-    border-radius:10px;
+    border-radius:8px;
     background: var(--surface-2);
     border:1px solid var(--border);
     margin-bottom:12px;
@@ -218,7 +218,7 @@
     background:var(--accent-gray);
   }
   .status-dot.has-date{background:var(--accent-amber);}
-  .status-dot.done{background:var(--accent);}
+  .status-dot.done{background:var(--accent-teal);}
   
   .plan-main{flex:1; min-width:0;}
   .plan-name{
@@ -241,7 +241,7 @@
     border-radius: 6px;
   }
   
-  /* Bloque de Acciones */
+  /* Bloque de Edición y Eliminación */
   .plan-actions{
     display:flex;
     align-items: center;
@@ -256,12 +256,12 @@
     background:var(--surface);
     border:1px solid var(--border);
     color:var(--muted);
-    width:30px;height:30px;
+    width:32px;height:32px;
     border-radius:6px;
     cursor:pointer;
     font-size:14px;
     display:flex;align-items:center;justify-content:center;
-    transition:border-color .15s, color .15s;
+    transition: var(--transition);
   }
   .icon-btn:hover{color:var(--text); border-color:var(--muted);}
   .icon-btn.danger:hover{color:var(--danger); border-color:var(--danger); background: rgba(232,100,90,0.05);}
@@ -273,17 +273,16 @@
     color:var(--text);
     font-size:12px;
     font-family:'IBM Plex Mono',monospace;
-    padding:4px 6px;
+    padding:5px 6px;
     width:125px;
   }
-  .empty{
+  .empty, .loading, .error{
     color:var(--muted);
-    font-size:13px;
-    padding:20px 4px;
+    font-size:13.5px;
+    padding:24px 8px;
     text-align: center;
-    border: 1px dashed var(--border);
-    border-radius: 8px;
   }
+  .error { color: var(--danger); }
 
   /* Calendario */
   .cal-nav{
@@ -326,8 +325,8 @@
   }
   .cal-day.empty-cell{cursor:default; background: transparent;}
   .cal-day:hover:not(.empty-cell){background:var(--surface); box-shadow: inset 0 0 0 1px var(--border);}
-  .cal-day.today{border:1px solid var(--accent-amber); color: var(--accent-amber);}
-  .cal-day.selected{background:var(--accent-amber); color:#0d0f12; font-weight:600;}
+  .cal-day.today{border:1px solid var(--accent); color: var(--accent);}
+  .cal-day.selected{background:var(--accent); color:#0d0f12; font-weight:600;}
   .cal-day .pip{
     position:absolute;
     bottom:3px;
@@ -342,8 +341,8 @@
     align-items:center;
     gap:6px;
     background:var(--surface-2);
-    border:1px solid var(--accent-amber);
-    color: var(--accent-amber);
+    border:1px solid var(--accent);
+    color: var(--accent);
     border-radius:20px;
     padding:5px 12px;
     font-size:12px;
@@ -352,43 +351,27 @@
     cursor:pointer;
   }
 
-  .loading, .error{
-    color:var(--muted);
-    font-size:13px;
-    padding:20px 4px;
-    text-align: center;
-  }
-  .error{color:var(--danger);}
-
-  /* Barra de usuario + RSVP */
+  /* Barra de Identificación Obligatoria + RSVP */
   .who-bar{
-    background: linear-gradient(135deg, rgba(255,180,84,0.03) 0%, rgba(0,0,0,0) 100%);
+    background: linear-gradient(135deg, rgba(255,180,84,0.02) 0%, rgba(0,0,0,0) 100%);
     border: 1px solid var(--border);
     padding: 14px;
     border-radius: var(--radius);
     margin-bottom:20px;
-  }
-  .who-bar label {
-    font-size: 11px;
-    font-family: 'IBM Plex Mono', monospace;
-    color: var(--accent-amber);
-    text-transform: uppercase;
-    display: block;
-    margin-bottom: 6px;
   }
   .who-bar input{
     background:var(--surface-2);
     border:1px solid var(--border);
     border-radius:8px;
     color:var(--text);
-    padding:10px 12px;
+    padding:11px 12px;
     font-size:14px;
     font-family:inherit;
     width:100%;
     max-width:340px;
     transition: var(--transition);
   }
-  .who-bar input:focus { outline: none; border-color: var(--accent-amber); }
+  .who-bar input:focus { outline: none; border-color: var(--accent); }
   
   .rsvp-row{
     display:flex;
@@ -423,8 +406,8 @@
   <header>
     <h1><span class="dot">●</span> Planes del grupo</h1>
   </header>
-  <p class="sub">Lista colaborativa del grupo. Todo lo que pongas aquí se sincroniza para todos en tiempo real.</p>
-  <div class="notice">⚙️ Conectado de manera segura con tu proveedor de datos Supabase.</div>
+  <p class="sub">Lista colaborativa de planes con fecha. Cualquiera con este enlace puede añadir, editar o marcar como hecho.</p>
+  <div class="notice">Esto se guarda en una tabla de Supabase: todo lo que pongas aquí lo ve cualquiera que abra esta misma página.</div>
 
   <details class="guide-box" open>
     <summary>📖 ¿Cómo se usa esta web? (Toca para cerrar)</summary>
@@ -436,21 +419,20 @@
   </details>
 
   <div class="who-bar">
-    <label for="my-name">Paso obligatorio para poder votar:</label>
-    <input id="my-name" type="text" placeholder="Escribe aquí tu nombre..." maxlength="30">
+    <input id="my-name" type="text" placeholder="Tu nombre (para marcar si vas o no a un plan)" maxlength="30">
   </div>
 
   <form class="add-form" id="add-form">
-    <input id="f-name" type="text" placeholder="¿Qué plan propones? (Ej: Barbacoa en el campo)" required maxlength="80">
+    <input id="f-name" type="text" placeholder="Nombre del plan" required maxlength="80">
     <input id="f-date" type="date">
     <input id="f-time" type="text" placeholder="Hora aprox" maxlength="20">
     <input id="f-place" type="text" placeholder="Lugar" maxlength="60">
-    <input id="f-who" type="text" placeholder="Tu nombre (Organizador)" maxlength="40">
-    <button class="btn btn-primary" type="submit">Añadir Plan al Grupo</button>
+    <input id="f-who" type="text" placeholder="Quién lo propone (opcional)" maxlength="40">
+    <button class="btn btn-primary" type="submit">Añadir</button>
   </form>
 
   <div id="content">
-    <div class="loading">Conectando con la base de datos de planes…</div>
+    <div class="loading">Cargando planes…</div>
   </div>
 </div>
 
@@ -479,23 +461,23 @@ function sbHeaders(extra={}){
 
 async function loadData(){
   try{
-    // Intenta la carga relacional completa (Planes + Asistencia)
+    // Intenta la petición relacional cruzada completa (Planes + Asistencias)
     const res = await fetch(`${SUPABASE_URL}/rest/v1/${TABLE}?select=*,asistencia(name,status)&order=created_at.asc`, {
       headers: sbHeaders()
     });
-    if(!res.ok) throw new Error('Relational fetch failed');
+    if(!res.ok) throw new Error('Relational fetch failed: ' + res.status);
     plans = await res.json();
   }catch(e){
-    console.warn('Asistencia no encontrada o sin configurar. Cargando modo seguro de planes simples...', e);
+    console.warn('Ejecutando fallback seguro. Cargando lista limpia sin cruce de asistencias...', e);
     try {
-      // Modo seguro automático: si el usuario no tiene la tabla asistencia creada, carga solo los planes para que no se quede congelada la web
+      // Fallback: si falla por la tabla asistencia, trae los planes limpios para que la web funcione de inmediato
       const resFallback = await fetch(`${SUPABASE_URL}/rest/v1/${TABLE}?select=*&order=created_at.asc`, {
         headers: sbHeaders()
       });
-      if(!resFallback.ok) throw new Error('Fallback fetch failed');
+      if(!resFallback.ok) throw new Error('Fallback failed');
       plans = await resFallback.json();
     } catch(err) {
-      document.getElementById('content').innerHTML = `<div class="error">No se pudo conectar con Supabase. Revisa que la tabla "${TABLE}" exista de manera pública.</div>`;
+      document.getElementById('content').innerHTML = `<div class="error">No se pudo conectar con Supabase. Comprueba la configuración de red o que la tabla "${TABLE}" exista.</div>`;
       return;
     }
   }
@@ -513,11 +495,11 @@ function renderAll(){
   content.innerHTML = `
     <div class="grid">
       <div class="panel">
-        <h2>📌 Lista de planes</h2>
+        <h2>Lista</h2>
         <div id="list-area"></div>
       </div>
       <div class="panel">
-        <h2>📅 Calendario</h2>
+        <h2>Calendario</h2>
         <div id="cal-area"></div>
       </div>
     </div>
@@ -536,7 +518,7 @@ function renderList(){
 
   if(items.length === 0){
     area.innerHTML = selectedDate
-      ? `<div class="filter-chip" onclick="clearFilter()">✕ Quitar filtro: ${fmtDate(selectedDate)}</div>
+      ? `<div class="filter-chip" onclick="clearFilter()">✕ ${fmtDate(selectedDate)}</div>
          <div class="empty">No hay planes para el ${fmtDate(selectedDate)}.</div>`
       : `<div class="empty">Sin planes todavía. Añade el primero arriba.</div>`;
     return;
@@ -547,14 +529,14 @@ function renderList(){
 
   let html = '';
   if(selectedDate){
-    html += `<div class="filter-chip" onclick="clearFilter()">✕ Viendo: ${fmtDate(selectedDate)} (Ver todos)</div>`;
+    html += `<div class="filter-chip" onclick="clearFilter()">✕ ${fmtDate(selectedDate)}</div>`;
   }
   if(withDate.length){
-    html += `<div class="group-label">Con fecha definida</div>`;
+    html += `<div class="group-label">Con fecha</div>`;
     html += withDate.map(renderItem).join('');
   }
   if(withoutDate.length){
-    html += `<div class="group-label">Ideas propuestas (Sin fecha)</div>`;
+    html += `<div class="group-label">Sin fecha</div>`;
     html += withoutDate.map(renderItem).join('');
   }
   area.innerHTML = html;
@@ -565,10 +547,10 @@ function renderItem(p){
   const num = String(idx+1).padStart(3,'0');
   const dotClass = p.status === 'hecho' ? 'done' : (p.date ? 'has-date' : '');
   const metaParts = [];
-  if(p.date) metaParts.push('📅 ' + fmtDate(p.date));
-  if(p.time) metaParts.push('🕒 ' + p.time);
-  if(p.place) metaParts.push('📍 ' + p.place);
-  if(p.who) metaParts.push('👤 Propone: ' + p.who);
+  if(p.date) metaParts.push(fmtDate(p.date));
+  if(p.time) metaParts.push(p.time);
+  if(p.place) metaParts.push(p.place);
+  if(p.who) metaParts.push(p.who);
   return `
     <div class="plan-item">
       <div class="plan-header-meta">
@@ -578,10 +560,9 @@ function renderItem(p){
           ${p.status==='hecho'?'Completado':(p.date?'Confirmado':'En el aire')}
         </div>
       </div>
-      
       <div class="plan-main">
         <div class="plan-name ${p.status==='hecho'?'done':''}">${escapeHtml(p.name)}</div>
-        ${metaParts.length ? `<div class="plan-meta">${metaParts.map(escapeHtml).join(' &nbsp;·&nbsp; ')}</div>` : ''}
+        ${metaParts.length ? `<div class="plan-meta">${metaParts.map(escapeHtml).join(' · ')}</div>` : ''}
         <div class="rsvp-row">
           <button class="rsvp-btn" onclick="setRSVP('${p.id}', true)">✅ Voy</button>
           <button class="rsvp-btn" onclick="setRSVP('${p.id}', false)">❌ No voy</button>
@@ -590,7 +571,7 @@ function renderItem(p){
       </div>
       <div class="plan-actions">
         <div style="display:flex; align-items:center; gap:6px;">
-          <span style="font-size:11px; color:var(--muted); font-family:'IBM Plex Mono', monospace;">Mover:</span>
+          <span style="font-size:11px; color:var(--muted); font-family:'IBM Plex Mono', monospace;">Fecha:</span>
           <input type="date" class="date-inline" value="${p.date||''}" onchange="setDate('${p.id}', this.value)" title="Cambiar fecha">
         </div>
         <div style="display:flex; gap:6px;">
@@ -666,4 +647,32 @@ function renderCalendar(){
   area.innerHTML = `
     <div class="cal-nav">
       <button class="icon-btn" onclick="navMonth(-1)">‹</button>
-      <div clas
+      <div class="cal-month">${MONTHS[month]} ${year}</div>
+      <button class="icon-btn" onclick="navMonth(1)">›</button>
+    </div>
+    <div class="cal-grid">
+      ${DOW.map(d=>`<div class="cal-dow">${d}</div>`).join('')}
+      ${cells}
+    </div>
+  `;
+}
+
+function navMonth(delta){
+  calOffset += delta;
+  renderCalendar();
+}
+
+function selectDate(dateStr){
+  selectedDate = (selectedDate === dateStr) ? null : dateStr;
+  renderCalendar();
+  renderList();
+}
+
+function clearFilter(){
+  selectedDate = null;
+  renderCalendar();
+  renderList();
+}
+
+async function toggleStatus(id){
+  const 
