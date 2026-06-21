@@ -84,6 +84,8 @@
   .add-form input::placeholder{color:var(--muted);}
   #f-name{flex:1 1 200px; min-width:160px;}
   #f-date{flex:0 0 150px;}
+  #f-time{flex:0 0 100px;}
+  #f-place{flex:0 0 150px;}
   #f-who{flex:0 0 150px;}
   .btn{
     border:1px solid var(--border);
@@ -275,6 +277,45 @@
     padding:20px 4px;
   }
   .error{color:var(--danger);}
+
+  /* who-bar + rsvp */
+  .who-bar{margin-bottom:16px;}
+  .who-bar input{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:8px;
+    color:var(--text);
+    padding:8px 10px;
+    font-size:13px;
+    font-family:inherit;
+    width:100%;
+    max-width:300px;
+    transition:border-color .3s;
+  }
+  .who-bar input::placeholder{color:var(--muted);}
+  .rsvp-row{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    margin-top:5px;
+    flex-wrap:wrap;
+  }
+  .rsvp-btn{
+    border:1px solid var(--border);
+    background:var(--surface-2);
+    color:var(--muted);
+    border-radius:6px;
+    padding:2px 8px;
+    font-size:11px;
+    cursor:pointer;
+    font-family:'IBM Plex Mono',monospace;
+  }
+  .rsvp-btn:hover{color:var(--text); border-color:#3a414c;}
+  .rsvp-summary{
+    font-size:11px;
+    color:var(--muted);
+    font-family:'IBM Plex Mono',monospace;
+  }
 </style>
 </head>
 <body>
@@ -285,9 +326,15 @@
   <p class="sub">Lista colaborativa de planes con fecha. Cualquiera con este enlace puede añadir, editar o marcar como hecho.</p>
   <div class="notice">Esto se guarda en una tabla de Supabase: todo lo que pongas aquí lo ve cualquiera que abra esta misma página.</div>
 
+  <div class="who-bar">
+    <input id="my-name" type="text" placeholder="Tu nombre (para marcar si vas o no a un plan)" maxlength="30">
+  </div>
+
   <form class="add-form" id="add-form">
     <input id="f-name" type="text" placeholder="Nombre del plan" required maxlength="80">
     <input id="f-date" type="date">
+    <input id="f-time" type="text" placeholder="Hora aprox" maxlength="20">
+    <input id="f-place" type="text" placeholder="Lugar" maxlength="60">
     <input id="f-who" type="text" placeholder="Quién lo propone (opcional)" maxlength="40">
     <button class="btn btn-primary" type="submit">Añadir</button>
   </form>
@@ -322,7 +369,7 @@ function sbHeaders(extra={}){
 
 async function loadData(){
   try{
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/${TABLE}?select=*&order=created_at.asc`, {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/${TABLE}?select=*,asistencia(name,status)&order=created_at.asc`, {
       headers: sbHeaders()
     });
     if(!res.ok) throw new Error('fetch failed: ' + res.status);
@@ -399,6 +446,8 @@ function renderItem(p){
   const dotClass = p.status === 'hecho' ? 'done' : (p.date ? 'has-date' : '');
   const metaParts = [];
   if(p.date) metaParts.push(fmtDate(p.date));
+  if(p.time) metaParts.push(p.time);
+  if(p.place) metaParts.push(p.place);
   if(p.who) metaParts.push(p.who);
   return `
     <div class="plan-item">
@@ -407,6 +456,11 @@ function renderItem(p){
       <div class="plan-main">
         <div class="plan-name ${p.status==='hecho'?'done':''}">${escapeHtml(p.name)}</div>
         ${metaParts.length ? `<div class="plan-meta">${metaParts.map(escapeHtml).join(' · ')}</div>` : ''}
+        <div class="rsvp-row">
+          <button class="rsvp-btn" onclick="setRSVP('${p.id}', true)">✅ Voy</button>
+          <button class="rsvp-btn" onclick="setRSVP('${p.id}', false)">❌ No voy</button>
+          <span class="rsvp-summary">${rsvpSummary(p.asistencia)}</span>
+        </div>
       </div>
       <div class="plan-actions">
         <input type="date" class="date-inline" value="${p.date||''}" onchange="setDate('${p.id}', this.value)" title="Cambiar fecha">
@@ -415,6 +469,36 @@ function renderItem(p){
       </div>
     </div>
   `;
+}
+
+function rsvpSummary(asistencia){
+  if(!asistencia || asistencia.length === 0) return '';
+  const van = asistencia.filter(a => a.status === 'va').map(a => escapeHtml(a.name));
+  const noVan = asistencia.filter(a => a.status === 'no_va').map(a => escapeHtml(a.name));
+  const parts = [];
+  if(van.length) parts.push(`✅ ${van.join(', ')}`);
+  if(noVan.length) parts.push(`❌ ${noVan.join(', ')}`);
+  return parts.join('&nbsp;&nbsp;');
+}
+
+async function setRSVP(planId, going){
+  const nameInput = document.getElementById('my-name');
+  const name = nameInput.value.trim();
+  if(!name){
+    nameInput.focus();
+    nameInput.style.borderColor = 'var(--danger)';
+    setTimeout(() => { nameInput.style.borderColor = ''; }, 1500);
+    return;
+  }
+  const status = going ? 'va' : 'no_va';
+  try{
+    await fetch(`${SUPABASE_URL}/rest/v1/asistencia?on_conflict=plan_id,name`, {
+      method: 'POST',
+      headers: sbHeaders({'Prefer':'resolution=merge-duplicates,return=minimal'}),
+      body: JSON.stringify([{ plan_id: planId, name, status }])
+    });
+  }catch(e){ console.error('No se pudo guardar la asistencia', e); }
+  await loadData();
 }
 
 function escapeHtml(str){
@@ -522,21 +606,26 @@ document.getElementById('add-form').addEventListener('submit', async (e) => {
   e.preventDefault();
   const name = document.getElementById('f-name').value.trim();
   const date = document.getElementById('f-date').value;
+  const time = document.getElementById('f-time').value.trim();
+  const place = document.getElementById('f-place').value.trim();
   const who = document.getElementById('f-who').value.trim();
   if(!name) return;
   try{
     const res = await fetch(`${SUPABASE_URL}/rest/v1/${TABLE}`, {
       method: 'POST',
       headers: sbHeaders({'Prefer':'return=representation'}),
-      body: JSON.stringify([{ name, date: date || null, who: who || null, status: 'pendiente' }])
+      body: JSON.stringify([{ name, date: date || null, time: time || null, place: place || null, who: who || null, status: 'pendiente' }])
     });
     const [newPlan] = await res.json();
+    newPlan.asistencia = [];
     plans.push(newPlan);
   }catch(err){
     console.error('No se pudo añadir', err);
   }
   document.getElementById('f-name').value = '';
   document.getElementById('f-date').value = '';
+  document.getElementById('f-time').value = '';
+  document.getElementById('f-place').value = '';
   document.getElementById('f-who').value = '';
   renderAll();
 });
