@@ -7,327 +7,420 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --bg: #0d0f12;
-    --surface: #161a20;
-    --surface-2: #1d222a;
-    --border: #262b33;
-    --text: #e6e8eb;
-    --muted: #8b939f;
-    --accent: #5fd0c5;      /* hecho */
-    --accent-amber: #ffb454; /* pendiente con fecha */
-    --accent-gray: #5b6472;  /* sin fecha */
-    --danger: #e8645a;
-    --radius: 10px;
+  /* Variables de diseño por defecto (Modo Oscuro Premium) */
+  :root {
+    --bg: #0b0d10;
+    --surface: #13161b;
+    --surface-2: #1b1f26;
+    --border: #232932;
+    --text: #f0f2f5;
+    --muted: #8692a3;
+    --accent: #4ade80;       /* hecho - verde vibrante moderno */
+    --accent-amber: #f59e0b; /* pendiente con fecha - ámbar cálido */
+    --accent-gray: #64748b;  /* sin fecha */
+    --danger: #ef4444;
+    --radius: 12px;
+    --input-bg: #1b1f26;
+    --shadow: rgba(0, 0, 0, 0.3);
   }
-  *{box-sizing:border-box;}
+
+  /* Variables para Modo Claro Elegante */
+  [data-theme="light"] {
+    --bg: #f8fafc;
+    --surface: #ffffff;
+    --surface-2: #f1f5f9;
+    --border: #e2e8f0;
+    --text: #0f172a;
+    --muted: #64748b;
+    --accent: #10b981;       
+    --accent-amber: #f59e0b; 
+    --accent-gray: #94a3b8;  
+    --danger: #ef4444;
+    --input-bg: #ffffff;
+    --shadow: rgba(15, 23, 42, 0.05);
+  }
+
+  *{
+    box-sizing: border-box;
+    transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+  }
+  
   body{
-    margin:0;
-    background:var(--bg);
-    color:var(--text);
-    font-family:'Inter',sans-serif;
-    min-height:100vh;
-    padding:28px 18px 60px;
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    padding: 32px 18px 60px;
+    -webkit-font-smoothing: antialiased;
   }
-  .wrap{max-width:880px;margin:0 auto;}
+  
+  .wrap{ max-width: 900px; margin: 0 auto; position: relative; }
+  
   header{
-    display:flex;
-    align-items:baseline;
-    justify-content:space-between;
-    gap:12px;
-    margin-bottom:6px;
-    flex-wrap:wrap;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 8px;
+    flex-wrap: wrap;
+    padding-right: 60px; /* Espacio para el botón de tema */
   }
+  
   h1{
-    font-family:'IBM Plex Mono',monospace;
-    font-size:20px;
-    font-weight:600;
-    letter-spacing:-0.2px;
-    margin:0;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    margin: 0;
   }
-  h1 .dot{color:var(--accent);}
+  h1 .dot{ color: var(--accent-amber); }
+  
   .sub{
-    color:var(--muted);
-    font-size:13px;
-    margin:0 0 22px;
+    color: var(--muted);
+    font-size: 14px;
+    margin: 0 0 24px;
+    line-height: 1.5;
   }
+  
   .notice{
-    font-size:12px;
-    color:var(--muted);
-    border:1px solid var(--border);
-    border-radius:var(--radius);
-    padding:8px 12px;
-    margin-bottom:22px;
-    background:var(--surface);
+    font-size: 13px;
+    color: var(--muted);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 10px 14px;
+    margin-bottom: 24px;
+    background: var(--surface);
+    box-shadow: 0 2px 8px var(--shadow);
   }
 
-  /* add form */
+  /* Botón Cambiar Tema */
+  .theme-toggle {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text);
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    box-shadow: 0 4px 12px var(--shadow);
+  }
+  .theme-toggle:hover {
+    border-color: var(--muted);
+  }
+
+  /* Formulario Mejorado */
   .add-form{
-    display:flex;
-    gap:8px;
-    flex-wrap:wrap;
-    background:var(--surface);
-    border:1px solid var(--border);
-    border-radius:var(--radius);
-    padding:12px;
-    margin-bottom:24px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px;
+    margin-bottom: 32px;
+    box-shadow: 0 4px 12px var(--shadow);
   }
+  
   .add-form input{
-    background:var(--surface-2);
-    border:1px solid var(--border);
-    border-radius:8px;
-    color:var(--text);
-    padding:9px 10px;
-    font-size:14px;
-    font-family:inherit;
+    background: var(--input-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    padding: 10px 14px;
+    font-size: 14px;
+    font-family: inherit;
+    outline: none;
   }
-  .add-form input::placeholder{color:var(--muted);}
-  #f-name{flex:1 1 200px; min-width:160px;}
-  #f-date{flex:0 0 150px;}
-  #f-time{flex:0 0 100px;}
-  #f-place{flex:0 0 150px;}
-  #f-who{flex:0 0 150px;}
+  .add-form input:focus {
+    border-color: var(--muted);
+  }
+  .add-form input::placeholder{ color: var(--muted); }
+  
+  #f-name { flex: 2 1 240px; min-width: 180px; }
+  #f-date { flex: 1 1 140px; }
+  #f-time { flex: 1 1 100px; }
+  #f-place{ flex: 1 1 140px; }
+  #f-who  { flex: 1 1 140px; }
+  
   .btn{
-    border:1px solid var(--border);
-    background:var(--surface-2);
-    color:var(--text);
-    border-radius:8px;
-    padding:9px 14px;
-    font-size:14px;
-    font-family:inherit;
-    cursor:pointer;
-    transition:background .15s, border-color .15s;
+    border: 1px solid var(--border);
+    background: var(--surface-2);
+    color: var(--text);
+    border-radius: 8px;
+    padding: 10px 16px;
+    font-size: 14px;
+    font-family: inherit;
+    font-weight: 600;
+    cursor: pointer;
   }
-  .btn:hover{border-color:#3a414c;}
+  .btn:hover{ background: var(--border); }
   .btn-primary{
-    background:var(--accent);
-    border-color:var(--accent);
-    color:#06231f;
-    font-weight:600;
+    background: var(--text);
+    border-color: var(--text);
+    color: var(--bg);
   }
-  .btn-primary:hover{background:#74d9cf;}
+  .btn-primary:hover{
+    opacity: 0.9;
+    background: var(--text);
+  }
 
-  /* layout */
+  /* Layout principal */
   .grid{
-    display:grid;
-    grid-template-columns: 1.5fr 1fr;
-    gap:20px;
+    display: grid;
+    grid-template-columns: 1.6fr 1fr;
+    gap: 24px;
   }
-  @media (max-width:680px){ .grid{grid-template-columns:1fr;} }
+  @media (max-width: 768px){ .grid{ grid-template-columns: 1fr; } }
 
   .panel{
-    background:var(--surface);
-    border:1px solid var(--border);
-    border-radius:var(--radius);
-    padding:16px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    box-shadow: 0 4px 12px var(--shadow);
   }
   .panel h2{
-    font-family:'IBM Plex Mono',monospace;
-    font-size:12px;
-    text-transform:uppercase;
-    letter-spacing:.08em;
-    color:var(--muted);
-    margin:0 0 12px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+    color: var(--muted);
+    margin: 0 0 16px;
+    font-weight: 600;
   }
 
-  /* list */
+  /* Lista de Planes */
   .group-label{
-    font-size:11px;
-    color:var(--muted);
-    text-transform:uppercase;
-    letter-spacing:.06em;
-    margin:16px 0 8px;
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    margin: 24px 0 12px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 600;
   }
-  .group-label:first-child{margin-top:0;}
+  .group-label:first-child{ margin-top: 0; }
+  
   .plan-item{
-    display:flex;
-    align-items:center;
-    gap:10px;
-    padding:9px 8px;
-    border-radius:8px;
-    border:1px solid transparent;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    margin-bottom: 8px;
   }
-  .plan-item:hover{background:var(--surface-2);}
+  .plan-item:hover{
+    background: var(--surface-2);
+    border-color: var(--muted);
+  }
   .plan-id{
-    font-family:'IBM Plex Mono',monospace;
-    font-size:11px;
-    color:var(--muted);
-    width:34px;
-    flex-shrink:0;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    width: 32px;
+    flex-shrink: 0;
   }
   .status-dot{
-    width:9px;height:9px;border-radius:50%;
-    flex-shrink:0;
-    background:var(--accent-gray);
+    width: 10px; height: 10px; border-radius: 50%;
+    flex-shrink: 0;
+    background: var(--accent-gray);
   }
-  .status-dot.has-date{background:var(--accent-amber);}
-  .status-dot.done{background:var(--accent);}
-  .plan-main{flex:1; min-width:0;}
+  .status-dot.has-date{ background: var(--accent-amber); }
+  .status-dot.done{ background: var(--accent); }
+  
+  .plan-main{ flex: 1; min-width: 0; }
   .plan-name{
-    font-size:14px;
-    line-height:1.3;
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 1.4;
   }
   .plan-name.done{
-    text-decoration:line-through;
-    color:var(--muted);
+    text-decoration: line-through;
+    color: var(--muted);
   }
   .plan-meta{
-    font-size:11.5px;
-    color:var(--muted);
-    margin-top:1px;
-    font-family:'IBM Plex Mono',monospace;
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 3px;
+    font-family: 'IBM Plex Mono', monospace;
   }
+  
   .plan-actions{
-    display:flex;
-    gap:6px;
-    flex-shrink:0;
+    display: flex;
+    gap: 6px;
+    flex-shrink: 0;
+    align-items: center;
   }
+  
   .icon-btn{
-    background:none;
-    border:1px solid var(--border);
-    color:var(--muted);
-    width:26px;height:26px;
-    border-radius:6px;
-    cursor:pointer;
-    font-size:13px;
-    display:flex;align-items:center;justify-content:center;
-    transition:border-color .15s, color .15s;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    width: 28px; height: 28px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+    display: flex; align-items: center; justify-content: center;
   }
-  .icon-btn:hover{color:var(--text); border-color:#3a414c;}
-  .icon-btn.danger:hover{color:var(--danger); border-color:var(--danger);}
+  .icon-btn:hover{ color: var(--text); border-color: var(--muted); background: var(--surface-2); }
+  .icon-btn.danger:hover{ color: var(--danger); border-color: var(--danger); background: rgba(239, 68, 68, 0.1); }
+  
   input.date-inline{
-    background:var(--surface-2);
-    border:1px solid var(--border);
-    border-radius:6px;
-    color:var(--text);
-    font-size:11px;
-    font-family:'IBM Plex Mono',monospace;
-    padding:3px 4px;
-    width:108px;
+    background: var(--input-bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text);
+    font-size: 12px;
+    font-family: 'IBM Plex Mono', monospace;
+    padding: 4px 6px;
+    width: 118px;
+    outline: none;
   }
-  .empty{
-    color:var(--muted);
-    font-size:13px;
-    padding:14px 4px;
+  
+  .empty, .loading, .error{
+    color: var(--muted);
+    font-size: 14px;
+    padding: 24px 4px;
+    text-align: center;
   }
+  .error{ color: var(--danger); }
 
-  /* calendar */
+  /* Calendario */
   .cal-nav{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    margin-bottom:10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
   }
   .cal-month{
-    font-family:'IBM Plex Mono',monospace;
-    font-size:13px;
-    text-transform:capitalize;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 0.5px;
   }
   .cal-grid{
-    display:grid;
-    grid-template-columns:repeat(7,1fr);
-    gap:4px;
-    text-align:center;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+    text-align: center;
   }
   .cal-dow{
-    font-size:10px;
-    color:var(--muted);
-    padding-bottom:4px;
+    font-size: 11px;
+    color: var(--muted);
+    padding-bottom: 6px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 500;
   }
   .cal-day{
-    position:relative;
-    aspect-ratio:1;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:12px;
-    border-radius:7px;
-    cursor:pointer;
-    color:var(--text);
+    position: relative;
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    color: var(--text);
+    background: var(--surface-2);
   }
-  .cal-day.empty-cell{cursor:default;}
-  .cal-day:hover:not(.empty-cell){background:var(--surface-2);}
-  .cal-day.today{border:1px solid var(--accent);}
-  .cal-day.selected{background:var(--accent); color:#06231f; font-weight:600;}
+  .cal-day.empty-cell{ cursor: default; background: transparent; }
+  .cal-day:hover:not(.empty-cell){ background: var(--border); }
+  .cal-day.today{ border: 1px solid var(--accent-amber); color: var(--accent-amber); }
+  .cal-day.selected{ background: var(--text); color: var(--bg); font-weight: 600; }
+  
   .cal-day .pip{
-    position:absolute;
-    bottom:3px;
-    width:4px;height:4px;
-    border-radius:50%;
-    background:var(--accent-amber);
+    position: absolute;
+    bottom: 4px;
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: var(--accent-amber);
   }
-  .cal-day.selected .pip{background:#06231f;}
+  .cal-day.selected .pip{ background: var(--bg); }
+  
   .filter-chip{
-    display:inline-flex;
-    align-items:center;
-    gap:6px;
-    background:var(--surface-2);
-    border:1px solid var(--border);
-    border-radius:20px;
-    padding:5px 10px;
-    font-size:12px;
-    margin-top:10px;
-    font-family:'IBM Plex Mono',monospace;
-    cursor:pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 6px 12px;
+    font-size: 12px;
+    margin-top: 12px;
+    font-family: 'IBM Plex Mono', monospace;
+    cursor: pointer;
+    font-weight: 500;
   }
+  .filter-chip:hover { border-color: var(--muted); }
 
-  .loading, .error{
-    color:var(--muted);
-    font-size:13px;
-    padding:20px 4px;
-  }
-  .error{color:var(--danger);}
-
-  /* who-bar + rsvp */
-  .who-bar{margin-bottom:16px;}
+  /* Nombre de usuario e Identificación */
+  .who-bar{ margin-bottom: 20px; }
   .who-bar input{
-    background:var(--surface);
-    border:1px solid var(--border);
-    border-radius:8px;
-    color:var(--text);
-    padding:8px 10px;
-    font-size:13px;
-    font-family:inherit;
-    width:100%;
-    max-width:300px;
-    transition:border-color .3s;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    padding: 10px 14px;
+    font-size: 14px;
+    font-family: inherit;
+    width: 100%;
+    max-width: 320px;
+    outline: none;
+    box-shadow: 0 2px 6px var(--shadow);
   }
-  .who-bar input::placeholder{color:var(--muted);}
+  .who-bar input:focus { border-color: var(--muted); }
+  
+  /* Bloque Votaciones / RSVP */
   .rsvp-row{
-    display:flex;
-    align-items:center;
-    gap:6px;
-    margin-top:5px;
-    flex-wrap:wrap;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 6px;
+    flex-wrap: wrap;
   }
   .rsvp-btn{
-    border:1px solid var(--border);
-    background:var(--surface-2);
-    color:var(--muted);
-    border-radius:6px;
-    padding:2px 8px;
-    font-size:11px;
-    cursor:pointer;
-    font-family:'IBM Plex Mono',monospace;
+    border: 1px solid var(--border);
+    background: var(--surface-2);
+    color: var(--text);
+    border-radius: 6px;
+    padding: 3px 10px;
+    font-size: 11px;
+    cursor: pointer;
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 500;
   }
-  .rsvp-btn:hover{color:var(--text); border-color:#3a414c;}
+  .rsvp-btn:hover{ border-color: var(--muted); background: var(--border); }
   .rsvp-summary{
-    font-size:11px;
-    color:var(--muted);
-    font-family:'IBM Plex Mono',monospace;
+    font-size: 12px;
+    color: var(--muted);
+    font-family: 'IBM Plex Mono', monospace;
+    margin-left: 4px;
   }
 </style>
 </head>
 <body>
 <div class="wrap">
+  <button class="theme-toggle" id="theme-btn" title="Cambiar tema">🌓</button>
+
   <header>
     <h1><span class="dot">●</span> Planes del grupo</h1>
   </header>
   <p class="sub">Lista colaborativa de planes con fecha. Cualquiera con este enlace puede añadir, editar o marcar como hecho.</p>
-  <div class="notice">Esto se guarda en una tabla de Supabase: todo lo que pongas aquí lo ve cualquiera que abra esta misma página.</div>
+  <div class="notice">Esto se guarda en una tabla de Supabase de manera pública y en tiempo real.</div>
 
   <div class="who-bar">
-    <input id="my-name" type="text" placeholder="Tu nombre (para marcar si vas o no a un plan)" maxlength="30">
+    <input id="my-name" type="text" placeholder="Tu nombre para apuntarte a los planes..." maxlength="30">
   </div>
 
   <form class="add-form" id="add-form">
@@ -335,28 +428,40 @@
     <input id="f-date" type="date">
     <input id="f-time" type="text" placeholder="Hora aprox" maxlength="20">
     <input id="f-place" type="text" placeholder="Lugar" maxlength="60">
-    <input id="f-who" type="text" placeholder="Quién lo propone (opcional)" maxlength="40">
+    <input id="f-who" type="text" placeholder="Quién propone" maxlength="40">
     <button class="btn btn-primary" type="submit">Añadir</button>
   </form>
 
   <div id="content">
-    <div class="loading">Cargando planes…</div>
+    <div class="loading">Cargando la lista de planes…</div>
   </div>
 </div>
 
 <script>
-// --- Configura esto con tus datos de Supabase (Project Settings > API) ---
+// --- Configuración de Supabase ---
 const SUPABASE_URL = 'https://skicchnemhgugiarkbrk.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_M8lX-2ckfcA_FiSk5cXNYA_ZuTyTNaE';
 const TABLE = 'planes';
-// ---------------------------------------------------------------------------
+// ----------------------------------
 
 let plans = [];
-let calOffset = 0; // months from current month
-let selectedDate = null; // 'YYYY-MM-DD' or null
+let calOffset = 0; 
+let selectedDate = null; 
 
 const DOW = ['L','M','X','J','V','S','D'];
 const MONTHS = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+
+// --- Lógica de Cambio de Tema (Persistente) ---
+const themeBtn = document.getElementById('theme-btn');
+const currentTheme = localStorage.getItem('theme') || 'dark';
+document.documentElement.setAttribute('data-theme', currentTheme);
+
+themeBtn.addEventListener('click', () => {
+  let theme = document.documentElement.getAttribute('data-theme');
+  let newTheme = theme === 'light' ? 'dark' : 'light';
+  document.documentElement.setAttribute('data-theme', newTheme);
+  localStorage.setItem('theme', newTheme);
+});
 
 function sbHeaders(extra={}){
   return {
@@ -369,23 +474,21 @@ function sbHeaders(extra={}){
 
 async function loadData(){
   try{
-    // Intenta cargar cruzando los datos con la tabla de asistencias
     const res = await fetch(`${SUPABASE_URL}/rest/v1/${TABLE}?select=*,asistencia(name,status)&order=created_at.asc`, {
       headers: sbHeaders()
     });
     if(!res.ok) throw new Error('fetch failed: ' + res.status);
     plans = await res.json();
   }catch(e){
-    console.warn('La tabla asistencia falló. Aplicando fallback para cargar los planes igualmente:', e);
+    console.warn('Ejecutando fallback sin cruzar con tabla asistencia...', e);
     try {
-      // FALLBACK: Si falla lo anterior, traemos solo los planes limpios para que la web funcione sí o sí
       const resFallback = await fetch(`${SUPABASE_URL}/rest/v1/${TABLE}?select=*&order=created_at.asc`, {
         headers: sbHeaders()
       });
       if(!resFallback.ok) throw new Error('fallback failed');
       plans = await resFallback.json();
     } catch(err) {
-      document.getElementById('content').innerHTML = `<div class="error">No se pudo conectar con Supabase. Revisa las políticas RLS o la conexión.</div>`;
+      document.getElementById('content').innerHTML = `<div class="error">No se pudo conectar con Supabase. Comprueba las políticas RLS.</div>`;
       return;
     }
   }
@@ -403,7 +506,7 @@ function renderAll(){
   content.innerHTML = `
     <div class="grid">
       <div class="panel">
-        <h2>Lista</h2>
+        <h2>Lista de planes</h2>
         <div id="list-area"></div>
       </div>
       <div class="panel">
@@ -426,9 +529,9 @@ function renderList(){
 
   if(items.length === 0){
     area.innerHTML = selectedDate
-      ? `<div class="empty">No hay planes para el ${fmtDate(selectedDate)}.</div>
-         <div class="filter-chip" onclick="clearFilter()">✕ ${fmtDate(selectedDate)}</div>`
-      : `<div class="empty">Sin planes todavía. Añade el primero arriba.</div>`;
+      ? `<div class="empty">No hay planes organizados para el ${fmtDate(selectedDate)}.</div>
+         <div class="filter-chip" onclick="clearFilter()">✕ Quitar filtro (${fmtDate(selectedDate)})</div>`
+      : `<div class="empty">No hay ningún plan propuesto todavía. ¡Escribe uno arriba!</div>`;
     return;
   }
 
@@ -437,14 +540,14 @@ function renderList(){
 
   let html = '';
   if(selectedDate){
-    html += `<div class="filter-chip" onclick="clearFilter()">✕ ${fmtDate(selectedDate)}</div>`;
+    html += `<div class="filter-chip" onclick="clearFilter()">✕ Quitar filtro (${fmtDate(selectedDate)})</div>`;
   }
   if(withDate.length){
-    html += `<div class="group-label">Con fecha</div>`;
+    html += `<div class="group-label">Planes fechados</div>`;
     html += withDate.map(renderItem).join('');
   }
   if(withoutDate.length){
-    html += `<div class="group-label">Sin fecha</div>`;
+    html += `<div class="group-label">Planes en el aire (Sin fecha)</div>`;
     html += withoutDate.map(renderItem).join('');
   }
   area.innerHTML = html;
@@ -458,7 +561,7 @@ function renderItem(p){
   if(p.date) metaParts.push(fmtDate(p.date));
   if(p.time) metaParts.push(p.time);
   if(p.place) metaParts.push(p.place);
-  if(p.who) metaParts.push(p.who);
+  if(p.who) metaParts.push(`Por: ${p.who}`);
   return `
     <div class="plan-item">
       <div class="plan-id">#${num}</div>
@@ -473,8 +576,8 @@ function renderItem(p){
         </div>
       </div>
       <div class="plan-actions">
-        <input type="date" class="date-inline" value="${p.date||''}" onchange="setDate('${p.id}', this.value)" title="Cambiar fecha">
-        <button class="icon-btn" onclick="toggleStatus('${p.id}')" title="${p.status==='hecho'?'Marcar pendiente':'Marcar hecho'}">${p.status==='hecho'?'↺':'✓'}</button>
+        <input type="date" class="date-inline" value="${p.date||''}" onchange="setDate('${p.id}', this.value)" title="Asignar fecha">
+        <button class="icon-btn" onclick="toggleStatus('${p.id}')" title="${p.status==='hecho'?'Pendiente':'Hecho'}">${p.status==='hecho'?'↺':'✓'}</button>
         <button class="icon-btn danger" onclick="deletePlan('${p.id}')" title="Eliminar">✕</button>
       </div>
     </div>
@@ -486,8 +589,8 @@ function rsvpSummary(asistencia){
   const van = asistencia.filter(a => a.status === 'va').map(a => escapeHtml(a.name));
   const noVan = asistencia.filter(a => a.status === 'no_va').map(a => escapeHtml(a.name));
   const parts = [];
-  if(van.length) parts.push(`✅ ${van.join(', ')}`);
-  if(noVan.length) parts.push(`❌ ${noVan.join(', ')}`);
+  if(van.length) parts.push(`👍 ${van.join(', ')}`);
+  if(noVan.length) parts.push(`👎 ${noVan.join(', ')}`);
   return parts.join('&nbsp;&nbsp;');
 }
 
@@ -507,7 +610,7 @@ async function setRSVP(planId, going){
       headers: sbHeaders({'Prefer':'resolution=merge-duplicates,return=minimal'}),
       body: JSON.stringify([{ plan_id: planId, name, status }])
     });
-  }catch(e){ console.error('No se pudo guardar la asistencia', e); }
+  }catch(e){ console.error('Error al guardar asistencia', e); }
   await loadData();
 }
 
@@ -524,7 +627,7 @@ function renderCalendar(){
   const year = base.getFullYear();
   const month = base.getMonth();
 
-  const firstDow = (new Date(year, month, 1).getDay() + 6) % 7; // Monday=0
+  const firstDow = (new Date(year, month, 1).getDay() + 6) % 7; 
   const daysInMonth = new Date(year, month+1, 0).getDate();
   const todayStr = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}`;
 
@@ -584,7 +687,7 @@ async function toggleStatus(id){
       headers: sbHeaders({'Prefer':'return=minimal'}),
       body: JSON.stringify({ status: newStatus })
     });
-  }catch(e){ console.error('No se pudo guardar', e); }
+  }catch(e){ console.error('Error al actualizar estado', e); }
 }
 
 async function deletePlan(id){
@@ -594,53 +697,4 @@ async function deletePlan(id){
     await fetch(`${SUPABASE_URL}/rest/v1/${TABLE}?id=eq.${id}`, {
       method: 'DELETE',
       headers: sbHeaders({'Prefer':'return=minimal'})
-    });
-  }catch(e){ console.error('No se pudo borrar', e); }
-}
-
-async function setDate(id, value){
-  const p = plans.find(x => x.id === id);
-  if(!p) return;
-  p.date = value || null;
-  renderAll();
-  try{
-    await fetch(`${SUPABASE_URL}/rest/v1/${TABLE}?id=eq.${id}`, {
-      method: 'PATCH',
-      headers: sbHeaders({'Prefer':'return=minimal'}),
-      body: JSON.stringify({ date: value || null })
-    });
-  }catch(e){ console.error('No se pudo guardar', e); }
-}
-
-document.getElementById('add-form').addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const name = document.getElementById('f-name').value.trim();
-  const date = document.getElementById('f-date').value;
-  const time = document.getElementById('f-time').value.trim();
-  const place = document.getElementById('f-place').value.trim();
-  const who = document.getElementById('f-who').value.trim();
-  if(!name) return;
-  try{
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/${TABLE}`, {
-      method: 'POST',
-      headers: sbHeaders({'Prefer':'return=representation'}),
-      body: JSON.stringify([{ name, date: date || null, time: time || null, place: place || null, who: who || null, status: 'pendiente' }])
-    });
-    const [newPlan] = await res.json();
-    newPlan.asistencia = [];
-    plans.push(newPlan);
-  }catch(err){
-    console.error('No se pudo añadir', err);
-  }
-  document.getElementById('f-name').value = '';
-  document.getElementById('f-date').value = '';
-  document.getElementById('f-time').value = '';
-  document.getElementById('f-place').value = '';
-  document.getElementById('f-who').value = '';
-  renderAll();
-});
-
-loadData();
-</script>
-</body>
-</html>
+    
