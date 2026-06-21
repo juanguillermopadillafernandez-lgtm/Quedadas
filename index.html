@@ -14,13 +14,11 @@
     --border: #262b33;
     --text: #e6e8eb;
     --muted: #8b939f;
-    --accent: #ffb454;      /* color unificado ámbar para destacar elementos principales */
-    --accent-teal: #5fd0c5; /* hecho */
+    --accent: #5fd0c5;      /* hecho */
     --accent-amber: #ffb454; /* pendiente con fecha */
     --accent-gray: #5b6472;  /* sin fecha */
     --danger: #e8645a;
     --radius: 10px;
-    --transition: all 0.2s ease;
   }
   *{box-sizing:border-box;}
   body{
@@ -29,8 +27,7 @@
     color:var(--text);
     font-family:'Inter',sans-serif;
     min-height:100vh;
-    padding:24px 14px 60px;
-    line-height: 1.4;
+    padding:28px 18px 60px;
   }
   .wrap{max-width:880px;margin:0 auto;}
   header{
@@ -52,110 +49,71 @@
   .sub{
     color:var(--muted);
     font-size:13px;
-    margin:4px 0 22px;
+    margin:0 0 22px;
   }
   .notice{
     font-size:12px;
     color:var(--muted);
     border:1px solid var(--border);
     border-radius:var(--radius);
-    padding:10px 12px;
+    padding:8px 12px;
     margin-bottom:22px;
     background:var(--surface);
   }
 
-  /* Guía de uso interactiva para mitigar dudas de usuarios nuevos */
-  .guide-box {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 14px;
-    margin-bottom: 22px;
-    font-size: 13px;
-  }
-  .guide-box summary {
-    font-family: 'IBM Plex Mono', monospace;
-    color: var(--accent);
-    font-weight: 600;
-    cursor: pointer;
-  }
-  .guide-box ul {
-    margin-top: 8px;
-    padding-left: 18px;
-    color: var(--muted);
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-  }
-
-  /* Formulario de Adición Adaptivo (Bloque en Móvil, Rejilla en PC) */
+  /* add form */
   .add-form{
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
     background:var(--surface);
     border:1px solid var(--border);
     border-radius:var(--radius);
-    padding:14px;
+    padding:12px;
     margin-bottom:24px;
   }
-  
-  @media (min-width: 580px) {
-    .add-form {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 10px;
-    }
-    #f-name, .btn-primary { grid-column: 1 / -1; }
-  }
-
   .add-form input{
     background:var(--surface-2);
     border:1px solid var(--border);
     border-radius:8px;
     color:var(--text);
-    padding:11px 12px;
+    padding:9px 10px;
     font-size:14px;
     font-family:inherit;
-    width: 100%;
-    transition: var(--transition);
-  }
-  .add-form input:focus{
-    outline: none;
-    border-color: var(--muted);
   }
   .add-form input::placeholder{color:var(--muted);}
-
+  #f-name{flex:1 1 200px; min-width:160px;}
+  #f-date{flex:0 0 150px;}
+  #f-time{flex:0 0 100px;}
+  #f-place{flex:0 0 150px;}
+  #f-who{flex:0 0 150px;}
   .btn{
     border:1px solid var(--border);
     background:var(--surface-2);
     color:var(--text);
     border-radius:8px;
-    padding:11px 14px;
+    padding:9px 14px;
     font-size:14px;
     font-family:inherit;
     cursor:pointer;
-    font-weight: 600;
-    transition: var(--transition);
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
+    transition:background .15s, border-color .15s;
   }
   .btn:hover{border-color:#3a414c;}
   .btn-primary{
     background:var(--accent);
     border-color:var(--accent);
-    color:#0d0f12;
+    color:#06231f;
+    font-weight:600;
   }
-  .btn-primary:hover{background:#ffca85; transform: translateY(-1px);}
+  .btn-primary:hover{background:#74d9cf;}
 
-  /* Grid Responsivo principal */
+  /* layout */
   .grid{
     display:grid;
-    grid-template-columns: 1.4fr 1fr;
+    grid-template-columns: 1.5fr 1fr;
     gap:20px;
   }
-  @media (max-width:740px){ .grid{grid-template-columns:1fr;} }
+  @media (max-width:680px){ .grid{grid-template-columns:1fr;} }
 
   .panel{
     background:var(--surface);
@@ -169,134 +127,101 @@
     text-transform:uppercase;
     letter-spacing:.08em;
     color:var(--muted);
-    margin:0 0 14px;
-    padding-bottom:6px;
-    border-bottom: 1px solid var(--border);
+    margin:0 0 12px;
   }
 
-  /* Listado de planes optimizado para lecturas rápidas */
+  /* list */
   .group-label{
     font-size:11px;
     color:var(--muted);
     text-transform:uppercase;
     letter-spacing:.06em;
-    margin:20px 0 10px;
-    font-family: 'IBM Plex Mono', monospace;
+    margin:16px 0 8px;
   }
   .group-label:first-child{margin-top:0;}
-  
   .plan-item{
     display:flex;
-    flex-direction: column;
-    gap:12px;
-    padding:14px;
+    align-items:center;
+    gap:10px;
+    padding:9px 8px;
     border-radius:8px;
-    background: var(--surface-2);
-    border:1px solid var(--border);
-    margin-bottom:12px;
-    transition: var(--transition);
+    border:1px solid transparent;
   }
-  .plan-item:hover{border-color: #3e4756;}
-  
-  .plan-header-meta {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
+  .plan-item:hover{background:var(--surface-2);}
   .plan-id{
     font-family:'IBM Plex Mono',monospace;
     font-size:11px;
     color:var(--muted);
-    background: var(--surface);
-    padding: 2px 6px;
-    border-radius: 4px;
+    width:34px;
+    flex-shrink:0;
   }
   .status-dot{
     width:9px;height:9px;border-radius:50%;
-    display: inline-block;
+    flex-shrink:0;
     background:var(--accent-gray);
   }
   .status-dot.has-date{background:var(--accent-amber);}
-  .status-dot.done{background:var(--accent-teal);}
-  
+  .status-dot.done{background:var(--accent);}
   .plan-main{flex:1; min-width:0;}
   .plan-name{
-    font-size:15px;
-    font-weight: 600;
-    line-height:1.4;
-    color: var(--text);
+    font-size:14px;
+    line-height:1.3;
   }
   .plan-name.done{
     text-decoration:line-through;
     color:var(--muted);
   }
   .plan-meta{
-    font-size:12px;
+    font-size:11.5px;
     color:var(--muted);
-    margin-top:6px;
+    margin-top:1px;
     font-family:'IBM Plex Mono',monospace;
-    background: var(--surface);
-    padding: 6px 10px;
-    border-radius: 6px;
   }
-  
-  /* Bloque de Edición y Eliminación */
   .plan-actions{
     display:flex;
-    align-items: center;
-    justify-content: space-between;
-    gap:10px;
-    flex-wrap:wrap;
-    border-top: 1px solid var(--surface);
-    padding-top: 10px;
-    margin-top: 4px;
+    gap:6px;
+    flex-shrink:0;
   }
   .icon-btn{
-    background:var(--surface);
+    background:none;
     border:1px solid var(--border);
     color:var(--muted);
-    width:32px;height:32px;
+    width:26px;height:26px;
     border-radius:6px;
     cursor:pointer;
-    font-size:14px;
+    font-size:13px;
     display:flex;align-items:center;justify-content:center;
-    transition: var(--transition);
+    transition:border-color .15s, color .15s;
   }
-  .icon-btn:hover{color:var(--text); border-color:var(--muted);}
-  .icon-btn.danger:hover{color:var(--danger); border-color:var(--danger); background: rgba(232,100,90,0.05);}
-  
+  .icon-btn:hover{color:var(--text); border-color:#3a414c;}
+  .icon-btn.danger:hover{color:var(--danger); border-color:var(--danger);}
   input.date-inline{
-    background:var(--surface);
+    background:var(--surface-2);
     border:1px solid var(--border);
     border-radius:6px;
     color:var(--text);
-    font-size:12px;
+    font-size:11px;
     font-family:'IBM Plex Mono',monospace;
-    padding:5px 6px;
-    width:125px;
+    padding:3px 4px;
+    width:108px;
   }
-  .empty, .loading, .error{
+  .empty{
     color:var(--muted);
-    font-size:13.5px;
-    padding:24px 8px;
-    text-align: center;
+    font-size:13px;
+    padding:14px 4px;
   }
-  .error { color: var(--danger); }
 
-  /* Calendario */
+  /* calendar */
   .cal-nav{
     display:flex;
     align-items:center;
     justify-content:space-between;
-    margin-bottom:12px;
+    margin-bottom:10px;
   }
   .cal-month{
     font-family:'IBM Plex Mono',monospace;
     font-size:13px;
-    text-transform:uppercase;
-    letter-spacing: 0.05em;
-    font-weight: 600;
+    text-transform:capitalize;
   }
   .cal-grid{
     display:grid;
@@ -305,11 +230,9 @@
     text-align:center;
   }
   .cal-dow{
-    font-size:11px;
+    font-size:10px;
     color:var(--muted);
     padding-bottom:4px;
-    font-weight: 600;
-    font-family: 'IBM Plex Mono', monospace;
   }
   .cal-day{
     position:relative;
@@ -321,12 +244,11 @@
     border-radius:7px;
     cursor:pointer;
     color:var(--text);
-    background: var(--surface-2);
   }
-  .cal-day.empty-cell{cursor:default; background: transparent;}
-  .cal-day:hover:not(.empty-cell){background:var(--surface); box-shadow: inset 0 0 0 1px var(--border);}
-  .cal-day.today{border:1px solid var(--accent); color: var(--accent);}
-  .cal-day.selected{background:var(--accent); color:#0d0f12; font-weight:600;}
+  .cal-day.empty-cell{cursor:default;}
+  .cal-day:hover:not(.empty-cell){background:var(--surface-2);}
+  .cal-day.today{border:1px solid var(--accent);}
+  .cal-day.selected{background:var(--accent); color:#06231f; font-weight:600;}
   .cal-day .pip{
     position:absolute;
     bottom:3px;
@@ -334,68 +256,63 @@
     border-radius:50%;
     background:var(--accent-amber);
   }
-  .cal-day.selected .pip{background:#0d0f12;}
-  
+  .cal-day.selected .pip{background:#06231f;}
   .filter-chip{
     display:inline-flex;
     align-items:center;
     gap:6px;
     background:var(--surface-2);
-    border:1px solid var(--accent);
-    color: var(--accent);
+    border:1px solid var(--border);
     border-radius:20px;
-    padding:5px 12px;
+    padding:5px 10px;
     font-size:12px;
-    margin-bottom:14px;
+    margin-top:10px;
     font-family:'IBM Plex Mono',monospace;
     cursor:pointer;
   }
 
-  /* Barra de Identificación Obligatoria + RSVP */
-  .who-bar{
-    background: linear-gradient(135deg, rgba(255,180,84,0.02) 0%, rgba(0,0,0,0) 100%);
-    border: 1px solid var(--border);
-    padding: 14px;
-    border-radius: var(--radius);
-    margin-bottom:20px;
+  .loading, .error{
+    color:var(--muted);
+    font-size:13px;
+    padding:20px 4px;
   }
+  .error{color:var(--danger);}
+
+  /* who-bar + rsvp */
+  .who-bar{margin-bottom:16px;}
   .who-bar input{
-    background:var(--surface-2);
+    background:var(--surface);
     border:1px solid var(--border);
     border-radius:8px;
     color:var(--text);
-    padding:11px 12px;
-    font-size:14px;
+    padding:8px 10px;
+    font-size:13px;
     font-family:inherit;
     width:100%;
-    max-width:340px;
-    transition: var(--transition);
+    max-width:300px;
+    transition:border-color .3s;
   }
-  .who-bar input:focus { outline: none; border-color: var(--accent); }
-  
+  .who-bar input::placeholder{color:var(--muted);}
   .rsvp-row{
     display:flex;
     align-items:center;
-    gap:8px;
-    margin-top:8px;
+    gap:6px;
+    margin-top:5px;
     flex-wrap:wrap;
-    background: rgba(0,0,0,0.15);
-    padding: 6px 10px;
-    border-radius: 6px;
   }
   .rsvp-btn{
     border:1px solid var(--border);
-    background:var(--surface);
-    color:var(--text);
+    background:var(--surface-2);
+    color:var(--muted);
     border-radius:6px;
-    padding:3px 10px;
-    font-size:12px;
+    padding:2px 8px;
+    font-size:11px;
     cursor:pointer;
-    font-family: inherit;
+    font-family:'IBM Plex Mono',monospace;
   }
-  .rsvp-btn:hover{border-color:var(--muted);}
+  .rsvp-btn:hover{color:var(--text); border-color:#3a414c;}
   .rsvp-summary{
-    font-size:12px;
+    font-size:11px;
     color:var(--muted);
     font-family:'IBM Plex Mono',monospace;
   }
@@ -408,15 +325,6 @@
   </header>
   <p class="sub">Lista colaborativa de planes con fecha. Cualquiera con este enlace puede añadir, editar o marcar como hecho.</p>
   <div class="notice">Esto se guarda en una tabla de Supabase: todo lo que pongas aquí lo ve cualquiera que abra esta misma página.</div>
-
-  <details class="guide-box" open>
-    <summary>📖 ¿Cómo se usa esta web? (Toca para cerrar)</summary>
-    <ul>
-      <li><strong>1. Tu Nombre:</strong> Escríbelo abajo en el recuadro antes de interactuar.</li>
-      <li><strong>2. Apuntarse:</strong> Pulsa "✅ Voy" o "❌ No voy" dentro de la tarjeta de cualquier plan.</li>
-      <li><strong>3. Proponer algo:</strong> Escribe tu idea en el formulario inferior y dale a añadir.</li>
-    </ul>
-  </details>
 
   <div class="who-bar">
     <input id="my-name" type="text" placeholder="Tu nombre (para marcar si vas o no a un plan)" maxlength="30">
@@ -444,8 +352,8 @@ const TABLE = 'planes';
 // ---------------------------------------------------------------------------
 
 let plans = [];
-let calOffset = 0; 
-let selectedDate = null; 
+let calOffset = 0; // months from current month
+let selectedDate = null; // 'YYYY-MM-DD' or null
 
 const DOW = ['L','M','X','J','V','S','D'];
 const MONTHS = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
@@ -461,23 +369,23 @@ function sbHeaders(extra={}){
 
 async function loadData(){
   try{
-    // Intenta la petición relacional cruzada completa (Planes + Asistencias)
+    // Intenta cargar cruzando los datos con la tabla de asistencias
     const res = await fetch(`${SUPABASE_URL}/rest/v1/${TABLE}?select=*,asistencia(name,status)&order=created_at.asc`, {
       headers: sbHeaders()
     });
-    if(!res.ok) throw new Error('Relational fetch failed: ' + res.status);
+    if(!res.ok) throw new Error('fetch failed: ' + res.status);
     plans = await res.json();
   }catch(e){
-    console.warn('Ejecutando fallback seguro. Cargando lista limpia sin cruce de asistencias...', e);
+    console.warn('La tabla asistencia falló. Aplicando fallback para cargar los planes igualmente:', e);
     try {
-      // Fallback: si falla por la tabla asistencia, trae los planes limpios para que la web funcione de inmediato
+      // FALLBACK: Si falla lo anterior, traemos solo los planes limpios para que la web funcione sí o sí
       const resFallback = await fetch(`${SUPABASE_URL}/rest/v1/${TABLE}?select=*&order=created_at.asc`, {
         headers: sbHeaders()
       });
-      if(!resFallback.ok) throw new Error('Fallback failed');
+      if(!resFallback.ok) throw new Error('fallback failed');
       plans = await resFallback.json();
     } catch(err) {
-      document.getElementById('content').innerHTML = `<div class="error">No se pudo conectar con Supabase. Comprueba la configuración de red o que la tabla "${TABLE}" exista.</div>`;
+      document.getElementById('content').innerHTML = `<div class="error">No se pudo conectar con Supabase. Revisa las políticas RLS o la conexión.</div>`;
       return;
     }
   }
@@ -518,8 +426,8 @@ function renderList(){
 
   if(items.length === 0){
     area.innerHTML = selectedDate
-      ? `<div class="filter-chip" onclick="clearFilter()">✕ ${fmtDate(selectedDate)}</div>
-         <div class="empty">No hay planes para el ${fmtDate(selectedDate)}.</div>`
+      ? `<div class="empty">No hay planes para el ${fmtDate(selectedDate)}.</div>
+         <div class="filter-chip" onclick="clearFilter()">✕ ${fmtDate(selectedDate)}</div>`
       : `<div class="empty">Sin planes todavía. Añade el primero arriba.</div>`;
     return;
   }
@@ -553,13 +461,8 @@ function renderItem(p){
   if(p.who) metaParts.push(p.who);
   return `
     <div class="plan-item">
-      <div class="plan-header-meta">
-        <div class="plan-id">#${num}</div>
-        <div style="display:flex; align-items:center; gap:6px; font-size:11px; font-family:'IBM Plex Mono', monospace; color:var(--muted)">
-          <div class="status-dot ${dotClass}"></div>
-          ${p.status==='hecho'?'Completado':(p.date?'Confirmado':'En el aire')}
-        </div>
-      </div>
+      <div class="plan-id">#${num}</div>
+      <div class="status-dot ${dotClass}"></div>
       <div class="plan-main">
         <div class="plan-name ${p.status==='hecho'?'done':''}">${escapeHtml(p.name)}</div>
         ${metaParts.length ? `<div class="plan-meta">${metaParts.map(escapeHtml).join(' · ')}</div>` : ''}
@@ -570,26 +473,21 @@ function renderItem(p){
         </div>
       </div>
       <div class="plan-actions">
-        <div style="display:flex; align-items:center; gap:6px;">
-          <span style="font-size:11px; color:var(--muted); font-family:'IBM Plex Mono', monospace;">Fecha:</span>
-          <input type="date" class="date-inline" value="${p.date||''}" onchange="setDate('${p.id}', this.value)" title="Cambiar fecha">
-        </div>
-        <div style="display:flex; gap:6px;">
-          <button class="icon-btn" onclick="toggleStatus('${p.id}')" title="${p.status==='hecho'?'Marcar pendiente':'Marcar hecho'}">${p.status==='hecho'?'↺':'✓'}</button>
-          <button class="icon-btn danger" onclick="deletePlan('${p.id}')" title="Eliminar">✕</button>
-        </div>
+        <input type="date" class="date-inline" value="${p.date||''}" onchange="setDate('${p.id}', this.value)" title="Cambiar fecha">
+        <button class="icon-btn" onclick="toggleStatus('${p.id}')" title="${p.status==='hecho'?'Marcar pendiente':'Marcar hecho'}">${p.status==='hecho'?'↺':'✓'}</button>
+        <button class="icon-btn danger" onclick="deletePlan('${p.id}')" title="Eliminar">✕</button>
       </div>
     </div>
   `;
 }
 
 function rsvpSummary(asistencia){
-  if(!asistencia || asistencia.length === 0) return '<span style="color:var(--muted); font-style:italic; font-size:11px;">Nadie ha votado</span>';
+  if(!asistencia || asistencia.length === 0) return '';
   const van = asistencia.filter(a => a.status === 'va').map(a => escapeHtml(a.name));
   const noVan = asistencia.filter(a => a.status === 'no_va').map(a => escapeHtml(a.name));
   const parts = [];
-  if(van.length) parts.push(`👍 ${van.join(', ')}`);
-  if(noVan.length) parts.push(`👎 ${noVan.join(', ')}`);
+  if(van.length) parts.push(`✅ ${van.join(', ')}`);
+  if(noVan.length) parts.push(`❌ ${noVan.join(', ')}`);
   return parts.join('&nbsp;&nbsp;');
 }
 
@@ -626,7 +524,7 @@ function renderCalendar(){
   const year = base.getFullYear();
   const month = base.getMonth();
 
-  const firstDow = (new Date(year, month, 1).getDay() + 6) % 7; 
+  const firstDow = (new Date(year, month, 1).getDay() + 6) % 7; // Monday=0
   const daysInMonth = new Date(year, month+1, 0).getDate();
   const todayStr = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}`;
 
@@ -675,4 +573,74 @@ function clearFilter(){
 }
 
 async function toggleStatus(id){
-  const 
+  const p = plans.find(x => x.id === id);
+  if(!p) return;
+  const newStatus = p.status === 'hecho' ? 'pendiente' : 'hecho';
+  p.status = newStatus;
+  renderList();
+  try{
+    await fetch(`${SUPABASE_URL}/rest/v1/${TABLE}?id=eq.${id}`, {
+      method: 'PATCH',
+      headers: sbHeaders({'Prefer':'return=minimal'}),
+      body: JSON.stringify({ status: newStatus })
+    });
+  }catch(e){ console.error('No se pudo guardar', e); }
+}
+
+async function deletePlan(id){
+  plans = plans.filter(x => x.id !== id);
+  renderAll();
+  try{
+    await fetch(`${SUPABASE_URL}/rest/v1/${TABLE}?id=eq.${id}`, {
+      method: 'DELETE',
+      headers: sbHeaders({'Prefer':'return=minimal'})
+    });
+  }catch(e){ console.error('No se pudo borrar', e); }
+}
+
+async function setDate(id, value){
+  const p = plans.find(x => x.id === id);
+  if(!p) return;
+  p.date = value || null;
+  renderAll();
+  try{
+    await fetch(`${SUPABASE_URL}/rest/v1/${TABLE}?id=eq.${id}`, {
+      method: 'PATCH',
+      headers: sbHeaders({'Prefer':'return=minimal'}),
+      body: JSON.stringify({ date: value || null })
+    });
+  }catch(e){ console.error('No se pudo guardar', e); }
+}
+
+document.getElementById('add-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const name = document.getElementById('f-name').value.trim();
+  const date = document.getElementById('f-date').value;
+  const time = document.getElementById('f-time').value.trim();
+  const place = document.getElementById('f-place').value.trim();
+  const who = document.getElementById('f-who').value.trim();
+  if(!name) return;
+  try{
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/${TABLE}`, {
+      method: 'POST',
+      headers: sbHeaders({'Prefer':'return=representation'}),
+      body: JSON.stringify([{ name, date: date || null, time: time || null, place: place || null, who: who || null, status: 'pendiente' }])
+    });
+    const [newPlan] = await res.json();
+    newPlan.asistencia = [];
+    plans.push(newPlan);
+  }catch(err){
+    console.error('No se pudo añadir', err);
+  }
+  document.getElementById('f-name').value = '';
+  document.getElementById('f-date').value = '';
+  document.getElementById('f-time').value = '';
+  document.getElementById('f-place').value = '';
+  document.getElementById('f-who').value = '';
+  renderAll();
+});
+
+loadData();
+</script>
+</body>
+</html>
