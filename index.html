@@ -7,432 +7,414 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg: #0a0c10;
-    --surface: #12161a;
-    --surface-2: #1c2127;
-    --border: #2b323c;
-    --text: #f0f2f5;
-    --muted: #8a96a5;
-    --accent: #4ade80;      /* hecho (verde técnico) */
-    --accent-amber: #fbbf24; /* pendiente con fecha (ámbar) */
+  :root{
+    --bg: #0d0f12;
+    --surface: #161a20;
+    --surface-2: #1d222a;
+    --border: #262b33;
+    --text: #e6e8eb;
+    --muted: #8b939f;
+    --accent: #5fd0c5;      /* hecho */
+    --accent-amber: #ffb454; /* pendiente con fecha */
     --accent-gray: #5b6472;  /* sin fecha */
-    --danger: #f87171;
+    --danger: #e8645a;
     --radius: 12px;
     --transition: all 0.2s ease;
   }
-  
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Inter', sans-serif;
-    min-height: 100vh;
-    padding: 24px 16px 60px;
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter',sans-serif;
+    min-height:100vh;
+    padding:24px 14px 60px;
     line-height: 1.4;
   }
-  
-  .wrap { max-width: 960px; margin: 0 auto; }
-  
-  header {
-    text-align: center;
-    margin-bottom: 24px;
+  .wrap{max-width:880px;margin:0 auto;}
+  header{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    gap:12px;
+    margin-bottom:6px;
+    flex-wrap:wrap;
   }
-  
-  h1 {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 26px;
-    font-weight: 700;
-    letter-spacing: -0.5px;
-    margin-bottom: 6px;
+  h1{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:22px;
+    font-weight:600;
+    letter-spacing:-0.2px;
+    margin:0;
   }
-  
-  h1 .dot { color: var(--accent-amber); }
-  
-  .sub {
-    color: var(--muted);
-    font-size: 14px;
-    max-width: 600px;
-    margin: 0 auto 16px;
+  h1 .dot{color:var(--accent-amber);}
+  .sub{
+    color:var(--muted);
+    font-size:13px;
+    margin:4px 0 20px;
   }
-  
-  .notice {
-    font-size: 12.5px;
-    color: var(--muted);
-    border: 1px dashed var(--border);
-    border-radius: var(--radius);
-    padding: 12px 16px;
-    margin-bottom: 24px;
-    background: rgba(255, 255, 255, 0.01);
+  .notice{
+    font-size:12px;
+    color:var(--muted);
+    border:1px dashed var(--border);
+    border-radius:var(--radius);
+    padding:10px 12px;
+    margin-bottom:20px;
+    background:var(--surface);
   }
 
-  /* Guía visual rápida para usuarios nuevos */
-  .quick-guide {
+  /* Guía de uso intuitiva para usuarios nuevos */
+  .guide-box {
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: var(--radius);
-    padding: 16px;
-    margin-bottom: 24px;
+    padding: 14px;
+    margin-bottom: 20px;
     font-size: 13px;
   }
-  .quick-guide summary {
+  .guide-box summary {
     font-family: 'IBM Plex Mono', monospace;
     color: var(--accent-amber);
     font-weight: 600;
     cursor: pointer;
-    user-select: none;
   }
-  .quick-guide ul {
-    margin-top: 10px;
-    padding-left: 20px;
+  .guide-box ul {
+    margin-top: 8px;
+    padding-left: 18px;
     color: var(--muted);
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 4px;
   }
 
-  /* Campo de identificación obligatorio */
-  .who-bar {
-    background: linear-gradient(135deg, rgba(251, 191, 36, 0.04) 0%, rgba(0,0,0,0) 100%);
-    border: 1px solid var(--accent-amber);
-    border-radius: var(--radius);
-    padding: 16px;
-    margin-bottom: 24px;
+  /* Formulario de Adición Inteligente y Responsivo */
+  .add-form{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    padding:14px;
+    margin-bottom:24px;
   }
-  .who-bar p {
-    font-size: 11px;
-    font-family: 'IBM Plex Mono', monospace;
-    text-transform: uppercase;
-    color: var(--accent-amber);
-    margin-bottom: 8px;
-    letter-spacing: 0.05em;
-  }
-  .who-bar input {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    color: var(--text);
-    padding: 12px;
-    font-size: 14px;
-    font-family: inherit;
-    width: 100%;
-    max-width: 360px;
-    transition: var(--transition);
-  }
-  .who-bar input:focus {
-    outline: none;
-    border-color: var(--accent-amber);
-    box-shadow: 0 0 0 3px rgba(251, 191, 36, 0.1);
+  
+  /* En tablets y ordenadores se organiza en una cuadrícula limpia */
+  @media (min-width: 580px) {
+    .add-form {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+    #f-name, .btn-primary { grid-column: 1 / -1; }
   }
 
-  /* Formulario responsivo para añadir planes */
-  .add-form {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 12px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 16px;
-    margin-bottom: 32px;
-  }
-  .add-form input {
-    background: var(--surface-2);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    color: var(--text);
-    padding: 11px 12px;
-    font-size: 14px;
-    font-family: inherit;
+  .add-form input{
+    background:var(--surface-2);
+    border:1px solid var(--border);
+    border-radius:8px;
+    color:var(--text);
+    padding:11px 12px;
+    font-size:14px;
+    font-family:inherit;
     width: 100%;
     transition: var(--transition);
   }
-  .add-form input:focus {
+  .add-form input:focus{
     outline: none;
     border-color: var(--muted);
   }
-  
-  /* El nombre del plan ocupa todo el ancho disponible en pantallas grandes */
-  #f-name { grid-column: 1 / -1; }
+  .add-form input::placeholder{color:var(--muted);}
 
-  .btn {
-    border: 1px solid var(--border);
-    background: var(--surface-2);
-    color: var(--text);
-    border-radius: 8px;
-    padding: 11px 16px;
-    font-size: 14px;
-    font-family: inherit;
+  .btn{
+    border:1px solid var(--border);
+    background:var(--surface-2);
+    color:var(--text);
+    border-radius:8px;
+    padding:11px 14px;
+    font-size:14px;
+    font-family:inherit;
+    cursor:pointer;
     font-weight: 600;
-    cursor: pointer;
-    transition: var(--transition);
+    transition:background .15s, border-color .15s;
     display: inline-flex;
     align-items: center;
     justify-content: center;
   }
-  .btn:hover { border-color: #475366; background: var(--surface); }
-  
-  .btn-primary {
-    background: var(--accent-amber);
-    border-color: var(--accent-amber);
-    color: #0a0c10;
-    grid-column: 1 / -1; /* Botón expandido en móviles */
+  .btn:hover{border-color:#3a414c; background: var(--surface-2);}
+  .btn-primary{
+    background:var(--accent-amber);
+    border-color:var(--accent-amber);
+    color:#0d0f12;
   }
-  .btn-primary:hover { background: #fcd34d; transform: translateY(-1px); }
+  .btn-primary:hover{background:#fcd34d; transform: translateY(-1px);}
 
-  /* Grid Responsivo (Móviles: 1 col, PC: 2 cols) */
-  .grid {
-    display: grid;
-    grid-template-columns: 1.5fr 1fr;
-    gap: 24px;
+  /* Diseño de Rejilla (1 columna en móvil, 2 en PC) */
+  .grid{
+    display:grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap:20px;
   }
-  @media (max-width: 768px) {
-    .grid { grid-template-columns: 1fr; }
-  }
+  @media (max-width:740px){ .grid{grid-template-columns:1fr;} }
 
-  .panel {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 20px;
+  .panel{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    padding:16px;
   }
-  .panel h2 {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 13px;
-    text-transform: uppercase;
-    letter-spacing: .08em;
-    color: var(--muted);
-    margin-bottom: 16px;
-    padding-bottom: 8px;
+  .panel h2{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;
+    text-transform:uppercase;
+    letter-spacing:.08em;
+    color:var(--muted);
+    margin:0 0 14px;
+    padding-bottom:6px;
     border-bottom: 1px solid var(--border);
   }
 
-  /* Listado de planes estilo Cards Modernas */
-  .group-label {
-    font-size: 11px;
+  /* Lista de Eventos Estilo Cards */
+  .group-label{
+    font-size:11px;
+    color:var(--muted);
+    text-transform:uppercase;
+    letter-spacing:.06em;
+    margin:20px 0 10px;
     font-family: 'IBM Plex Mono', monospace;
-    color: var(--muted);
-    text-transform: uppercase;
-    letter-spacing: .06em;
-    margin: 24px 0 12px;
   }
-  .group-label:first-child { margin-top: 0; }
+  .group-label:first-child{margin-top:0;}
   
-  .plan-item {
-    background: var(--surface-2);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 16px;
-    margin-bottom: 14px;
-    display: flex;
+  .plan-item{
+    display:flex;
     flex-direction: column;
-    gap: 12px;
+    gap:10px;
+    padding:14px;
+    border-radius:10px;
+    background: var(--surface-2);
+    border:1px solid var(--border);
+    margin-bottom:12px;
     transition: var(--transition);
   }
-  .plan-item:hover {
-    border-color: #3e4756;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  .plan-item:hover{border-color: #3e4756;}
+  
+  .plan-header-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
   
-  .plan-id {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 11px;
-    color: var(--muted);
+  .plan-id{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    color:var(--muted);
     background: var(--surface);
     padding: 2px 6px;
     border-radius: 4px;
-    display: inline-block;
-    width: fit-content;
   }
-  
-  .status-dot {
-    width: 10px; height: 10px; border-radius: 50%;
+  .status-dot{
+    width:9px;height:9px;border-radius:50%;
     display: inline-block;
-    background: var(--accent-gray);
+    background:var(--accent-gray);
   }
-  .status-dot.has-date { background: var(--accent-amber); }
-  .status-dot.done { background: var(--accent); }
+  .status-dot.has-date{background:var(--accent-amber);}
+  .status-dot.done{background:var(--accent);}
   
-  .plan-main { min-width: 0; }
-  
-  .plan-name {
-    font-size: 16px;
+  .plan-main{flex:1; min-width:0;}
+  .plan-name{
+    font-size:15px;
     font-weight: 600;
-    line-height: 1.4;
+    line-height:1.4;
     color: var(--text);
-    margin-top: 4px;
   }
-  .plan-name.done {
-    text-decoration: line-through;
-    color: var(--muted);
+  .plan-name.done{
+    text-decoration:line-through;
+    color:var(--muted);
+  }
+  .plan-meta{
+    font-size:12px;
+    color:var(--muted);
+    margin-top:6px;
+    font-family:'IBM Plex Mono',monospace;
+    background: var(--surface);
+    padding: 6px 10px;
+    border-radius: 6px;
   }
   
-  .plan-meta {
-    font-size: 12px;
-    color: var(--muted);
-    font-family: 'IBM Plex Mono', monospace;
-    background: var(--surface);
-    padding: 8px 12px;
-    border-radius: 6px;
-    margin-top: 8px;
-    border: 1px solid rgba(255,255,255,0.01);
-  }
-  
-  /* Bloque de Votación / RSVP */
-  .rsvp-row {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    flex-wrap: wrap;
-    background: rgba(0,0,0,0.15);
-    padding: 8px 12px;
-    border-radius: 6px;
-    margin-top: 4px;
-  }
-  .rsvp-btn {
-    border: 1px solid var(--border);
-    background: var(--surface);
-    color: var(--text);
-    border-radius: 6px;
-    padding: 4px 10px;
-    font-size: 12px;
-    cursor: pointer;
-    font-family: inherit;
-    font-weight: 500;
-    transition: var(--transition);
-  }
-  .rsvp-btn:hover { border-color: var(--muted); }
-  .rsvp-summary {
-    font-size: 12px;
-    color: var(--muted);
-    font-family: 'IBM Plex Mono', monospace;
-  }
-
-  /* Acciones del Plan */
-  .plan-actions {
-    display: flex;
+  /* Bloque de Acciones */
+  .plan-actions{
+    display:flex;
     align-items: center;
     justify-content: space-between;
-    gap: 12px;
-    margin-top: 4px;
-    padding-top: 12px;
+    gap:10px;
+    flex-wrap:wrap;
     border-top: 1px solid var(--surface);
-    flex-wrap: wrap;
+    padding-top: 10px;
+    margin-top: 4px;
   }
-  
-  input.date-inline {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    color: var(--text);
-    font-size: 12px;
-    font-family: 'IBM Plex Mono', monospace;
-    padding: 5px 8px;
-    width: 130px;
+  .icon-btn{
+    background:var(--surface);
+    border:1px solid var(--border);
+    color:var(--muted);
+    width:30px;height:30px;
+    border-radius:6px;
+    cursor:pointer;
+    font-size:14px;
+    display:flex;align-items:center;justify-content:center;
+    transition:border-color .15s, color .15s;
   }
+  .icon-btn:hover{color:var(--text); border-color:var(--muted);}
+  .icon-btn.danger:hover{color:var(--danger); border-color:var(--danger); background: rgba(232,100,90,0.05);}
   
-  .action-btns-wrapper {
-    display: flex;
-    gap: 8px;
+  input.date-inline{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:6px;
+    color:var(--text);
+    font-size:12px;
+    font-family:'IBM Plex Mono',monospace;
+    padding:4px 6px;
+    width:125px;
   }
-  
-  .icon-btn {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    color: var(--muted);
-    width: 32px; height: 32px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 14px;
-    display: flex; align-items: center; justify-content: center;
-    transition: var(--transition);
-  }
-  .icon-btn:hover { color: var(--text); border-color: var(--muted); }
-  .icon-btn.danger:hover { color: var(--danger); border-color: var(--danger); background: rgba(248,113,113,0.05); }
-  
-  .empty, .loading, .error {
-    color: var(--muted);
-    font-size: 13.5px;
+  .empty{
+    color:var(--muted);
+    font-size:13px;
+    padding:20px 4px;
     text-align: center;
-    padding: 30px 12px;
     border: 1px dashed var(--border);
     border-radius: 8px;
   }
-  .error { color: var(--danger); border-color: var(--danger); }
 
-  /* Calendario Modernizado */
-  .cal-nav {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 14px;
+  /* Calendario */
+  .cal-nav{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:12px;
   }
-  .cal-month {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 14px;
-    font-weight: 600;
-    text-transform: uppercase;
+  .cal-month{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:13px;
+    text-transform:uppercase;
     letter-spacing: 0.05em;
+    font-weight: 600;
   }
-  .cal-grid {
-    display: grid;
-    grid-template-columns: repeat(7,1fr);
-    gap: 6px;
+  .cal-grid{
+    display:grid;
+    grid-template-columns:repeat(7,1fr);
+    gap:4px;
+    text-align:center;
   }
-  .cal-dow {
+  .cal-dow{
+    font-size:11px;
+    color:var(--muted);
+    padding-bottom:4px;
+    font-weight: 600;
+    font-family: 'IBM Plex Mono', monospace;
+  }
+  .cal-day{
+    position:relative;
+    aspect-ratio:1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:12px;
+    border-radius:7px;
+    cursor:pointer;
+    color:var(--text);
+    background: var(--surface-2);
+  }
+  .cal-day.empty-cell{cursor:default; background: transparent;}
+  .cal-day:hover:not(.empty-cell){background:var(--surface); box-shadow: inset 0 0 0 1px var(--border);}
+  .cal-day.today{border:1px solid var(--accent-amber); color: var(--accent-amber);}
+  .cal-day.selected{background:var(--accent-amber); color:#0d0f12; font-weight:600;}
+  .cal-day .pip{
+    position:absolute;
+    bottom:3px;
+    width:4px;height:4px;
+    border-radius:50%;
+    background:var(--accent-amber);
+  }
+  .cal-day.selected .pip{background:#0d0f12;}
+  
+  .filter-chip{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    background:var(--surface-2);
+    border:1px solid var(--accent-amber);
+    color: var(--accent-amber);
+    border-radius:20px;
+    padding:5px 12px;
+    font-size:12px;
+    margin-bottom:14px;
+    font-family:'IBM Plex Mono',monospace;
+    cursor:pointer;
+  }
+
+  .loading, .error{
+    color:var(--muted);
+    font-size:13px;
+    padding:20px 4px;
+    text-align: center;
+  }
+  .error{color:var(--danger);}
+
+  /* Barra de usuario + RSVP */
+  .who-bar{
+    background: linear-gradient(135deg, rgba(255,180,84,0.03) 0%, rgba(0,0,0,0) 100%);
+    border: 1px solid var(--border);
+    padding: 14px;
+    border-radius: var(--radius);
+    margin-bottom:20px;
+  }
+  .who-bar label {
     font-size: 11px;
     font-family: 'IBM Plex Mono', monospace;
-    color: var(--muted);
-    padding-bottom: 4px;
-    text-align: center;
-    font-weight: 600;
-  }
-  .cal-day {
-    position: relative;
-    aspect-ratio: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 13px;
-    border-radius: 8px;
-    cursor: pointer;
-    color: var(--text);
-    background: var(--surface-2);
-    transition: var(--transition);
-  }
-  .cal-day.empty-cell { cursor: default; background: transparent; }
-  .cal-day:hover:not(.empty-cell) { background: var(--surface); box-shadow: inset 0 0 0 1px var(--border); }
-  .cal-day.today { border: 1px solid var(--accent-amber); color: var(--accent-amber); }
-  .cal-day.selected { background: var(--accent-amber); color: #0a0c10; font-weight: 700; }
-  
-  .cal-day .pip {
-    position: absolute;
-    bottom: 4px;
-    width: 5px; height: 5px;
-    border-radius: 50%;
-    background: var(--accent-amber);
-  }
-  .cal-day.selected .pip { background: #0a0c10; }
-  
-  .filter-chip {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    background: var(--surface-2);
-    border: 1px solid var(--accent-amber);
     color: var(--accent-amber);
-    border-radius: 20px;
-    padding: 6px 12px;
-    font-size: 12px;
-    margin-bottom: 16px;
-    font-family: 'IBM Plex Mono', monospace;
-    cursor: pointer;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 6px;
+  }
+  .who-bar input{
+    background:var(--surface-2);
+    border:1px solid var(--border);
+    border-radius:8px;
+    color:var(--text);
+    padding:10px 12px;
+    font-size:14px;
+    font-family:inherit;
+    width:100%;
+    max-width:340px;
     transition: var(--transition);
   }
-  .filter-chip:hover {
-    background: var(--accent-amber);
-    color: #0a0c10;
+  .who-bar input:focus { outline: none; border-color: var(--accent-amber); }
+  
+  .rsvp-row{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    margin-top:8px;
+    flex-wrap:wrap;
+    background: rgba(0,0,0,0.15);
+    padding: 6px 10px;
+    border-radius: 6px;
+  }
+  .rsvp-btn{
+    border:1px solid var(--border);
+    background:var(--surface);
+    color:var(--text);
+    border-radius:6px;
+    padding:3px 10px;
+    font-size:12px;
+    cursor:pointer;
+    font-family: inherit;
+  }
+  .rsvp-btn:hover{border-color:var(--muted);}
+  .rsvp-summary{
+    font-size:12px;
+    color:var(--muted);
+    font-family:'IBM Plex Mono',monospace;
   }
 </style>
 </head>
@@ -440,31 +422,30 @@
 <div class="wrap">
   <header>
     <h1><span class="dot">●</span> Planes del grupo</h1>
-    <p class="sub">Espacio compartido para proponer planes, asignarles fecha y organizarnos.</p>
   </header>
-  
-  <div class="notice">⚙️ Sincronizado en tiempo real con Supabase. Los cambios que hagas los verá cualquiera de tu grupo al abrir la web.</div>
+  <p class="sub">Lista colaborativa del grupo. Todo lo que pongas aquí se sincroniza para todos en tiempo real.</p>
+  <div class="notice">⚙️ Conectado de manera segura con tu proveedor de datos Supabase.</div>
 
-  <details class="quick-guide" open>
-    <summary>📖 ¿Cómo funciona esta página? (Pulsa para cerrar)</summary>
+  <details class="guide-box" open>
+    <summary>📖 ¿Cómo se usa esta web? (Toca para cerrar)</summary>
     <ul>
-      <li><strong>1. Identifícate:</strong> Escribe tu nombre en la casilla amarilla de abajo antes de pulsar nada.</li>
-      <li><strong>2. Confirma asistencia:</strong> Usa los botones "✅ Voy" o "❌ No voy" dentro de cualquier plan disponible.</li>
-      <li><strong>3. Crea ideas:</strong> Si tienes pensada una quedada, rellena el formulario de arriba. Puedes dejar la fecha vacía si es solo una propuesta en el aire.</li>
+      <li><strong>1. Tu Nombre:</strong> Escríbelo abajo en el recuadro antes de interactuar.</li>
+      <li><strong>2. Apuntarse:</strong> Pulsa "✅ Voy" o "❌ No voy" dentro de la tarjeta de cualquier plan.</li>
+      <li><strong>3. Proponer algo:</strong> Escribe tu idea en el formulario inferior y dale a añadir.</li>
     </ul>
   </details>
 
   <div class="who-bar">
-    <p>Paso 1: Pon tu nombre aquí para poder votar</p>
-    <input id="my-name" type="text" placeholder="Tu nombre o apodo..." maxlength="30">
+    <label for="my-name">Paso obligatorio para poder votar:</label>
+    <input id="my-name" type="text" placeholder="Escribe aquí tu nombre..." maxlength="30">
   </div>
 
   <form class="add-form" id="add-form">
-    <input id="f-name" type="text" placeholder="¿Qué plan propones? (Ej: Cenita en el centro)" required maxlength="80">
-    <input id="f-date" type="date" title="Fecha del evento (Opcional)">
-    <input id="f-time" type="text" placeholder="Hora aproximada" maxlength="20">
-    <input id="f-place" type="text" placeholder="Lugar o punto de encuentro" maxlength="60">
-    <input id="f-who" type="text" placeholder="Quién eres tú (Organizador)" maxlength="40">
+    <input id="f-name" type="text" placeholder="¿Qué plan propones? (Ej: Barbacoa en el campo)" required maxlength="80">
+    <input id="f-date" type="date">
+    <input id="f-time" type="text" placeholder="Hora aprox" maxlength="20">
+    <input id="f-place" type="text" placeholder="Lugar" maxlength="60">
+    <input id="f-who" type="text" placeholder="Tu nombre (Organizador)" maxlength="40">
     <button class="btn btn-primary" type="submit">Añadir Plan al Grupo</button>
   </form>
 
@@ -481,8 +462,8 @@ const TABLE = 'planes';
 // ---------------------------------------------------------------------------
 
 let plans = [];
-let calOffset = 0; // months from current month
-let selectedDate = null; // 'YYYY-MM-DD' or null
+let calOffset = 0; 
+let selectedDate = null; 
 
 const DOW = ['L','M','X','J','V','S','D'];
 const MONTHS = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
@@ -498,15 +479,25 @@ function sbHeaders(extra={}){
 
 async function loadData(){
   try{
+    // Intenta la carga relacional completa (Planes + Asistencia)
     const res = await fetch(`${SUPABASE_URL}/rest/v1/${TABLE}?select=*,asistencia(name,status)&order=created_at.asc`, {
       headers: sbHeaders()
     });
-    if(!res.ok) throw new Error('fetch failed: ' + res.status);
+    if(!res.ok) throw new Error('Relational fetch failed');
     plans = await res.json();
   }catch(e){
-    console.error('No se pudo cargar', e);
-    document.getElementById('content').innerHTML = `<div class="error">⚠️ No se pudo conectar con Supabase. Revisa si las tablas o credenciales son correctas en tu script.</div>`;
-    return;
+    console.warn('Asistencia no encontrada o sin configurar. Cargando modo seguro de planes simples...', e);
+    try {
+      // Modo seguro automático: si el usuario no tiene la tabla asistencia creada, carga solo los planes para que no se quede congelada la web
+      const resFallback = await fetch(`${SUPABASE_URL}/rest/v1/${TABLE}?select=*&order=created_at.asc`, {
+        headers: sbHeaders()
+      });
+      if(!resFallback.ok) throw new Error('Fallback fetch failed');
+      plans = await resFallback.json();
+    } catch(err) {
+      document.getElementById('content').innerHTML = `<div class="error">No se pudo conectar con Supabase. Revisa que la tabla "${TABLE}" exista de manera pública.</div>`;
+      return;
+    }
   }
   renderAll();
 }
@@ -522,7 +513,7 @@ function renderAll(){
   content.innerHTML = `
     <div class="grid">
       <div class="panel">
-        <h2>📌 Lista de Planes</h2>
+        <h2>📌 Lista de planes</h2>
         <div id="list-area"></div>
       </div>
       <div class="panel">
@@ -546,8 +537,8 @@ function renderList(){
   if(items.length === 0){
     area.innerHTML = selectedDate
       ? `<div class="filter-chip" onclick="clearFilter()">✕ Quitar filtro: ${fmtDate(selectedDate)}</div>
-         <div class="empty">No hay planes apuntados para el ${fmtDate(selectedDate)}.</div>`
-      : `<div class="empty">Sin planes todavía. Añade el primero arriba en el formulario.</div>`;
+         <div class="empty">No hay planes para el ${fmtDate(selectedDate)}.</div>`
+      : `<div class="empty">Sin planes todavía. Añade el primero arriba.</div>`;
     return;
   }
 
@@ -556,10 +547,10 @@ function renderList(){
 
   let html = '';
   if(selectedDate){
-    html += `<div class="filter-chip" onclick="clearFilter()">✕ Viendo solo: ${fmtDate(selectedDate)} (Mostrar todos)</div>`;
+    html += `<div class="filter-chip" onclick="clearFilter()">✕ Viendo: ${fmtDate(selectedDate)} (Ver todos)</div>`;
   }
   if(withDate.length){
-    html += `<div class="group-label">Con fecha establecida</div>`;
+    html += `<div class="group-label">Con fecha definida</div>`;
     html += withDate.map(renderItem).join('');
   }
   if(withoutDate.length){
@@ -580,7 +571,7 @@ function renderItem(p){
   if(p.who) metaParts.push('👤 Propone: ' + p.who);
   return `
     <div class="plan-item">
-      <div style="display:flex; justify-content:space-between; align-items:center;">
+      <div class="plan-header-meta">
         <div class="plan-id">#${num}</div>
         <div style="display:flex; align-items:center; gap:6px; font-size:11px; font-family:'IBM Plex Mono', monospace; color:var(--muted)">
           <div class="status-dot ${dotClass}"></div>
@@ -591,20 +582,18 @@ function renderItem(p){
       <div class="plan-main">
         <div class="plan-name ${p.status==='hecho'?'done':''}">${escapeHtml(p.name)}</div>
         ${metaParts.length ? `<div class="plan-meta">${metaParts.map(escapeHtml).join(' &nbsp;·&nbsp; ')}</div>` : ''}
+        <div class="rsvp-row">
+          <button class="rsvp-btn" onclick="setRSVP('${p.id}', true)">✅ Voy</button>
+          <button class="rsvp-btn" onclick="setRSVP('${p.id}', false)">❌ No voy</button>
+          <span class="rsvp-summary">${rsvpSummary(p.asistencia)}</span>
+        </div>
       </div>
-
-      <div class="rsvp-row">
-        <button class="rsvp-btn" onclick="setRSVP('${p.id}', true)">✅ Voy</button>
-        <button class="rsvp-btn" onclick="setRSVP('${p.id}', false)">❌ No voy</button>
-        <span class="rsvp-summary">${rsvpSummary(p.asistencia)}</span>
-      </div>
-
       <div class="plan-actions">
         <div style="display:flex; align-items:center; gap:6px;">
-          <span style="font-size:11px; color:var(--muted); font-family:'IBM Plex Mono', monospace;">Mover fecha:</span>
+          <span style="font-size:11px; color:var(--muted); font-family:'IBM Plex Mono', monospace;">Mover:</span>
           <input type="date" class="date-inline" value="${p.date||''}" onchange="setDate('${p.id}', this.value)" title="Cambiar fecha">
         </div>
-        <div class="action-btns-wrapper">
+        <div style="display:flex; gap:6px;">
           <button class="icon-btn" onclick="toggleStatus('${p.id}')" title="${p.status==='hecho'?'Marcar pendiente':'Marcar hecho'}">${p.status==='hecho'?'↺':'✓'}</button>
           <button class="icon-btn danger" onclick="deletePlan('${p.id}')" title="Eliminar">✕</button>
         </div>
@@ -614,7 +603,7 @@ function renderItem(p){
 }
 
 function rsvpSummary(asistencia){
-  if(!asistencia || asistencia.length === 0) return '<span style="color:var(--muted); font-style:italic; font-size:11px;">Nadie ha respondido</span>';
+  if(!asistencia || asistencia.length === 0) return '<span style="color:var(--muted); font-style:italic; font-size:11px;">Nadie ha votado</span>';
   const van = asistencia.filter(a => a.status === 'va').map(a => escapeHtml(a.name));
   const noVan = asistencia.filter(a => a.status === 'no_va').map(a => escapeHtml(a.name));
   const parts = [];
@@ -656,7 +645,7 @@ function renderCalendar(){
   const year = base.getFullYear();
   const month = base.getMonth();
 
-  const firstDow = (new Date(year, month, 1).getDay() + 6) % 7; // Monday=0
+  const firstDow = (new Date(year, month, 1).getDay() + 6) % 7; 
   const daysInMonth = new Date(year, month+1, 0).getDate();
   const todayStr = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}`;
 
@@ -668,4 +657,13 @@ function renderCalendar(){
   }
   for(let d=1; d<=daysInMonth; d++){
     const dateStr = `${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
-    const isToday 
+    const isToday = dateStr === todayStr;
+    const isSelected = dateStr === selectedDate;
+    const hasPlan = datesWithPlans.has(dateStr);
+    cells += `<div class="cal-day ${isToday?'today':''} ${isSelected?'selected':''}" onclick="selectDate('${dateStr}')">${d}${hasPlan?'<span class="pip"></span>':''}</div>`;
+  }
+
+  area.innerHTML = `
+    <div class="cal-nav">
+      <button class="icon-btn" onclick="navMonth(-1)">‹</button>
+      <div clas
